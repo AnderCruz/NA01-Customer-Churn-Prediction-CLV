@@ -126,3 +126,39 @@ indicate which sections need the verified report.
 Keep Registry databases, source exports, reports, binaries and rendered
 notebook review copies outside Git. Execute copies in fresh kernels and
 leave saved outputs and execution counters cleared in the repository.
+
+## Phase 09 explainable AI
+
+[Notebook 11](06_explainable_ai/11_churn_model_explainability.ipynb) reports
+interventional TreeSHAP on the frozen churn classifier in class-1 probability
+and log odds. [Notebook 12](06_explainable_ai/12_clv_model_explainability.ipynb)
+reports the four-block Shapley game on the final clipped billed-value predictor,
+matched-account MAE permutation and supported sensitivity. Both render verified
+JSON in a read-only review. Fresh-kernel verification rendered 18 churn
+and 23 CLV figures from the cleared sources. The notebooks exercise neither
+the frozen estimators nor protected reserves.
+[Approved Phase 09 scope and evidence](../docs/05_ml/phase09_explainability_scope_and_validation.md).
+
+Use a separate Python 3.12 environment outside the repository for the research
+runner. The compatible audit used NumPy 2.5.4, scikit-learn 1.9.1, pandas 2.3.3,
+SciPy 1.18.1, Joblib 1.6.0, SHAP 0.54.1, Numba 0.68.1, Pandera 0.26.1, Pydantic
+2.14.3, PyYAML 6.0.3 and openpyxl 3.1.5. Create the isolated environment
+where needed, then run from the repository root:
+
+```bash
+python3.12 -m venv /tmp/nci-phase09-compat
+/tmp/nci-phase09-compat/bin/python -m pip install \
+  numpy==2.5.4 scikit-learn==1.9.1 pandas==2.3.3 scipy==1.18.1 joblib==1.6.0 \
+  shap==0.54.1 numba==0.68.1 pandera==0.26.1 pydantic==2.14.3 \
+  PyYAML==6.0.3 openpyxl==3.1.5
+PYTHONPATH=src /tmp/nci-phase09-compat/bin/python \
+  -m nowa_customer_intelligence.explainability.research \
+  --workspace data/processed/phase09-explainability-review
+```
+
+The workspace must be new. The default notebook report directory is
+`data/processed/phase09-explainability-research/`. Set `NCI_XAI_WORKSPACE`
+to the absolute path of another verified workspace when using an independent
+replay. Notebook-only environments can render the reports without SHAP.
+Execute fresh-kernel review copies outside Git. Keep their rendered outputs
+and the local research files outside repository sources.

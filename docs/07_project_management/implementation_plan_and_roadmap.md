@@ -24,7 +24,9 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 06 — Churn Modelling | Accepted and completed with documented predictive limitations. |
 | 07 — CLV Modelling | Accepted and completed with documented limitations. |
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
-| 09–14 | Retain their approved sequence. |
+| 09 — Explainable AI | Accepted and completed with documented limitations. |
+| 10 — API Development | Pending. |
+| 11–14 | Retain their approved sequence. |
 
 ### 2.1 Historical draft phase table
 
@@ -639,4 +641,81 @@ Notebook schema, links, Ruff lint and format, dependency consistency,
 whitespace and retained artefact checksums passed. No Phase 08 research model
 was refitted, and the Phase 06 and Phase 07 frozen evidence remains intact.
 
-**PHASE 09 — EXPLAINABLE AI: PENDING.**
+## 22. Phase 09 explainable AI
+
+**PHASE 09 — EXPLAINABLE AI: ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**
+
+The Project Owner approved XAI-PO-001 through XAI-PO-005. The Phase 08
+checkpoint remains synchronised and its negative model nomination remains
+recorded. The Phase 09 work delivers CLV billed-value research, churn model
+diagnostics and deterministic RFM interpretation in documentation.
+[Scope and validation specification](../05_ml/phase09_explainability_scope_and_validation.md).
+
+The final audit checked both frozen model fingerprints and fitted lineage,
+and reconciled the retained evidence for all 717 churn and 355 CLV
+development-validation outputs. Churn interventional TreeSHAP passed on
+class-1 probability and log odds (98 rows per scale, maximum residuals
+2.51e-9 and 4.21e-8). Episode age led the mean absolute probability
+attribution at 0.11781. The explained false positive scored 0.9191,
+and the eight positive validation accounts and 695 false positives limit
+predictive interpretation.
+
+CLV interventional TreeSHAP failed on all 12 signed raw checks, with a
+maximum discrepancy of £9.66 and an unresolved cause. Path-dependent
+TreeSHAP reconciled on the signed pre-clip scale. The validated method
+uses four original-feature blocks, 16 coalitions and the final clipped
+six-month gross issued GBP predictor. The £486.65 training-reference
+baseline and signed contributions reconstruct all 102 forecasts within
+£1.14e-13. Invoice history and cadence led mean absolute attribution
+at £112.16. Its matched-account permutation increased row MAE by £138.05
+(sample SD £9.06) relative to £58.27 on the same 355 rows from 180
+accounts over 30 repetitions. The local cases include a £473.41
+forecast against £1,327.20 recorded and a −£3.83 raw estimate clipped to £0.
+
+Identical-background replay showed zero change. The primary 64-account
+training references included 61 February 2023 churn rows and 64 June
+2022 CLV rows. Four alternate backgrounds and 100 account-bootstrap
+draws gave median rank correlations of 0.984 and 0.995 for churn and
+1.000 for both CLV diagnostics. Individual contributions shifted by
+up to 0.07225 probability or £24.15 across backgrounds. Supported
+PDP/ICE points use variable account denominators. None of the four
+predeclared interaction grids supported a matched four-corner contrast.
+
+Acceptance covers frozen-model explanation engineering and internal
+synthetic research. Operational risk scoring, validated commercial
+churn prediction, financial recommendations, causal claims, customer
+interventions, revenue-at-risk and production deployment remain outside
+scope. Accepted modelling results and protected reserve evidence were
+preserved. The final audit passed 87 targeted and 1,147 regression
+tests with the historical Batch 09 fitting integration excluded. Both
+notebooks rendered in fresh kernels and their repository copies have
+cleared outputs and counters.
+[Churn notebook](../../notebooks/06_explainable_ai/11_churn_model_explainability.ipynb),
+[CLV notebook](../../notebooks/06_explainable_ai/12_clv_model_explainability.ipynb).
+
+### 22.1 Engineering acceptance matrix
+
+| ID | Requirement | Result | Evidence |
+|---|---|---|---|
+| XAI-01 | Approved scope | Passed | XAI-PO-001 through XAI-PO-005 preserved. |
+| XAI-02 | Frozen model provenance | Passed | Model hashes, accepted designs and saved research evidence verified. |
+| XAI-03 | Reference populations | Passed | Training-only reference, prior development validation and distinct-account samples checked. |
+| XAI-04 | Feature contract and lineage | Passed | Churn 25→40→30 and CLV 17→29 verified against fitted lineage. |
+| XAI-05 | Output-scale interpretation | Passed | Class-1 probability, log odds and clipped issued GBP interpreted on their respective scales. |
+| XAI-06 | Global explanations | Passed | Mean absolute contributions on 96 distinct validation accounts per model. |
+| XAI-07 | Local explanations | Passed | Anonymised cases and additive reconstructions reconciled. |
+| XAI-08 | SHAP or justified alternative | Passed with documented limitations | Churn TreeSHAP passed. CLV signed interventional probe failed and the clipped four-block game passed. |
+| XAI-09 | Permutation importance or alternative | Passed with documented limitations | CLV matched-account MAE deltas verified. Calendar stayed fixed and churn performance permutation was withheld. |
+| XAI-10 | PDP and ICE | Passed with documented limitations | Grids and account support checked. Four matched-contrast grids lacked support. |
+| XAI-11 | Additivity and consistency | Passed | Zero failures on all delivered modes at their frozen tolerances. |
+| XAI-12 | Stability | Passed with documented limitations | Identical replay, four alternative backgrounds and 100 bootstraps checked. Local changes and temporal concentration documented. |
+| XAI-13 | Churn predictive limitations | Passed | Weak ranking, eight positives and 695 false positives remain visible. |
+| XAI-14 | CLV financial interpretation | Passed | Issued GBP target, clipping, cadence and error examples verified. |
+| XAI-15 | Segmentation and RFM interpretation | Passed | Deterministic RFM and Phase 08 negative nomination preserved. |
+| XAI-16 | Correlation and causality | Passed | Within-block relationships, implausible hybrids and support restrictions documented. |
+| XAI-17 | Churn explainability notebook | Passed with documented limitations | Fresh-kernel replay and churn diagnostic limits verified. |
+| XAI-18 | CLV explainability notebook | Passed with documented limitations | Fresh-kernel replay, grouped attribution and failed raw TreeSHAP configuration documented. |
+| XAI-19 | Tests and reproducibility | Passed | Targeted and repository regression tests, fingerprints and notebook replay passed. |
+| XAI-20 | Prior phase boundaries | Passed | Accepted checkpoints, frozen outcomes and reserves preserved. |
+
+**PHASE 10 — API DEVELOPMENT: PENDING.**
