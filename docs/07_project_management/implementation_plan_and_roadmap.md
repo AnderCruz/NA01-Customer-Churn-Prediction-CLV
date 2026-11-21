@@ -22,8 +22,9 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 04 — Data Understanding & EDA | Accepted and completed with documented limitations. |
 | 05 — Feature Engineering | Accepted and completed with documented limitations. |
 | 06 — Churn Modelling | Accepted and completed with documented predictive limitations. |
-| 07 — CLV Modelling | Pending. |
-| 08–14 | Retain their approved sequence. |
+| 07 — CLV Modelling | Accepted and completed with documented limitations. |
+| 08 — Customer Segmentation | Pending. |
+| 09–14 | Retain their approved sequence. |
 
 ### 2.1 Historical draft phase table
 
@@ -423,4 +424,110 @@ prioritisation, stable calibration or independent generalisation. The seed-2027
 reserve remains unscored. No real customer validation has been performed. Future
 deployment requires additional evidence and separate approval.
 
-**PHASE 07 — CLV MODELLING: PENDING.**
+## 20. Phase 07 customer lifetime value modelling
+
+**PHASE 07 — CLV MODELLING: ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**
+
+The [economic definition and evaluation record](../05_ml/phase07_clv_economic_definition_and_validation.md)
+records the approved CLV-PO-001 through CLV-PO-004 decisions. The fictional historical analysis uses Decimal GBP issuance with
+canonical invoice-to-episode-to-account attribution and explicit evidence
+availability. Active and completed episodes contribute known issuance.
+Reactivation preserves both episode identities and the owning account. The
+active snapshot's monthly-normalised amount is a separate contractual measure.
+
+The accepted seed-42 scenario reconstructed 1,000 accounts, 1,200 episodes,
+18,661 snapshots and 14,787 invoices for April 2021 through March 2024.
+Issued amount totals £1,566,111.80, of which £1,127,567.00 is monthly and
+£438,544.80 is annual. The 1,000 active episodes at extraction have usable
+snapshot amounts totalling £77,056.60 per month. Future outcomes require an
+approved economic definition and completeness rules. Holdout data and churn
+probabilities from Phase 06 are outside the CLV analysis.
+
+[07_clv_historical_value_and_baselines.ipynb](../../notebooks/04_clv_modelling/07_clv_historical_value_and_baselines.ipynb)
+presents the verified descriptive work and calendar headroom. [08_clv_predictive_models_and_validation.ipynb](../../notebooks/04_clv_modelling/08_clv_predictive_models_and_validation.ipynb)
+records the approved six-month gross billed-value proxy, fixed research design
+and financial evaluation.
+
+The historical notebook ran in a fresh Python 3.12 kernel with 17 code cells
+and eight figures. Its month-end screen left 33, 30 and 24 of 36 observation
+landmarks with calendar room for illustrative 3-, 6- and 12-month horizons.
+The screen establishes neither complete follow-up nor label maturity.
+The regression passed 1,099 tests with the historical Batch 09 fitting test
+excluded. Ruff, dependency consistency, notebook schema and Git whitespace
+checks passed. The retained source and Phase 06 artefact checksums matched.
+
+### 20.1 Approved predictive experiment
+
+CLV-PO-001 approves the canonical account target `future_6m_issued_gbp`.
+CLV-PO-002 includes legitimate episode invoices, including reactivations.
+CLV-PO-003 separates mature zero from missing or incomplete follow-up.
+CLV-PO-004 approves temporal and group isolation, validation MAE and a separate
+CLV reserve. Label-only support checks passed before fitting.
+
+The training, validation and reserve populations included 303, 180 and
+802 distinct accounts respectively. Histogram Gradient Boosting led validation
+MAE at £58.27 versus the training-median baseline of £112.96. The separately
+generated seed-731 reserve was scored after freezing the candidate and returned
+MAE £51.57. Synthetic schedule effects and positive forecast bias remain relevant
+limitations. Real customer value, cash and profit remain outside this evidence.
+
+
+Initial predictive verification passed 41 targeted tests and 1,108 regression
+tests with the historical Batch 09 model-fitting test excluded. Notebook 07
+rendered 18 code cells and nine figures. Notebook 08 rendered 11 code cells and
+six figures. Both executed in fresh Python 3.12 kernels. The retained source
+data, Registries and Phase 06 artefacts matched their recorded checksums.
+
+### 20.2 Project Owner final acceptance
+
+The owner accepted the engineering implementation and synthetic predictive
+evidence within the approved experimental scope. CLV-PO-001 through CLV-PO-004
+remain in force. The target is six-calendar-month gross issued GBP at canonical
+customer grain. It is a billed-value proxy. Cash collection, recognised revenue,
+margin, discounting and lifetime extrapolation remain outside scope.
+Commercial financial decision-making and production deployment remain unapproved.
+
+Final verification passed 41 targeted checks and 1,108 regression tests with
+the historical Batch 09 model-fitting test excluded. Fresh Python 3.12 kernels
+rendered Notebook 07 with 25 code cells and 18 figures and Notebook 08 with
+27 code cells and 29 figures. These are the comprehensive revisions. Both
+source notebooks have cleared outputs. Retained datasets, Registries, models
+and research reports matched their checksums. The seed-2027 Phase 06 holdout
+remains unscored.
+
+**Predictive limitations.** Development and reserve populations are fictional and
+share the same generation mechanism. The seed-731 reserve has one observation date.
+Only the frozen nominee was scored, so no independent baseline comparison exists.
+Training and validation errors differ substantially. Annual-cadence validation MAE
+(£120.72) exceeds monthly MAE (£32.13). Mixed cadence has eight rows from four
+accounts. Lower realised-value bands tend to be overforecast and higher bands
+underforecast. Repeat observations contribute to the 355 validation rows from
+180 accounts. Account-bootstrap intervals condition on the fitted model and omit
+full model-selection uncertainty. Real-customer generalisation and commercial
+utility remain unverified, and no approved operational error tolerance establishes
+commercial suitability.
+
+**Deferred engineering.** The contractual billing baseline requires verified
+future retention and renewal assumptions. Account-level product usage features
+require a valid temporal aggregation policy. Neither is part of the completed
+implementation.
+
+| Criterion | Acceptance result |
+|---|---|
+| CLV-01 | Passed. Approved six-month billed-value target implemented. |
+| CLV-02 | Passed. Canonical account roll-up preserves episodes and invoice lineage. |
+| CLV-03 | Passed with documented limitations. Verified fictional issuance within the observed source window. |
+| CLV-04 | Passed. Decimal GBP aggregation and explicit monetary semantics. |
+| CLV-05 | Passed. Point-in-time features and separate future evidence. |
+| CLV-06 | Passed. Mature zero, unknown, incomplete and censored evidence remain distinct. |
+| CLV-07 | Passed. Historical amounts reconcile at invoice, episode and customer grain. |
+| CLV-08 | Passed with documented limitations. Training-median baseline evaluated. Contractual baseline deferred. |
+| CLV-09 | Passed. Three fixed regression candidates evaluated on identical validation rows. |
+| CLV-10 | Passed. Forward maturity, account isolation and a separate synthetic reserve. |
+| CLV-11 | Passed. GBP error metrics, signed bias, cohort diagnostics and conditional uncertainty reported. |
+| CLV-12 | Passed. Historical and baseline notebook verified. |
+| CLV-13 | Passed. Predictive models and validation notebook verified. |
+| CLV-14 | Passed. Automated and notebook checks verified under NEDS v1.1. |
+| CLV-15 | Passed. Approved architecture and phase boundaries preserved. |
+
+**PHASE 08 — CUSTOMER SEGMENTATION: PENDING.**

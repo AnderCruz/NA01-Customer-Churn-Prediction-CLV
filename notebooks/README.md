@@ -75,3 +75,25 @@ allows one fitting run per prepared workspace. An interrupted run retains its
 records. If the interrupted run could have reached reserve prediction, treat that
 reserve as consumed and replay only in development mode. Keep the reports, model
 binary, Registry and executed notebook copies local and outside Git.
+
+## Phase 07 customer lifetime value modelling
+
+[Historical customer value and baseline feasibility](04_clv_modelling/07_clv_historical_value_and_baselines.ipynb)
+reconstructs the accepted Fieldwise Cloud scenario offline with a temporary
+Registry and export directory that are removed after loading. Use the Python 3.12
+notebook environment described above and run the source in a fresh kernel. Keep
+executed copies outside Git. Monetary aggregates are Decimal GBP and the figures
+use floating-point coordinates after aggregation.
+
+The [Phase 07 economic and evaluation record](../docs/05_ml/phase07_clv_economic_definition_and_validation.md)
+defines the approved six-month billed-value proxy and frozen experiment.
+[Predictive models and validation](04_clv_modelling/08_clv_predictive_models_and_validation.ipynb)
+loads the checksum-verified design and results from
+`data/processed/phase07-clv-research/`. Notebook 07 also displays the fitted
+baseline when the report is present. Set `NCI_CLV_WORKSPACE` to an absolute local
+workspace path if needed. Both render without fitting.
+
+Use `python -m nowa_customer_intelligence.models.clv.research` to generate the
+initial evidence in a new local workspace. The archived reference reserve has
+already been scored. Use its saved report for review and preserve its frozen
+selection. Keep reports, model binaries and executed notebooks outside Git.
