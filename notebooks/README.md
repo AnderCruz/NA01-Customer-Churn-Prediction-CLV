@@ -97,3 +97,32 @@ Use `python -m nowa_customer_intelligence.models.clv.research` to generate the
 initial evidence in a new local workspace. The archived reference reserve has
 already been scored. Use its saved report for review and preserve its frozen
 selection. Keep reports, model binaries and executed notebooks outside Git.
+
+## Phase 08 customer segmentation
+
+[Notebook 09](05_customer_segmentation/09_rfm_and_customer_profiling.ipynb)
+profiles historical finance, contracts, usage availability and frozen RFM.
+[Notebook 10](05_customer_segmentation/10_customer_clustering_and_validation.ipynb)
+renders the clustering grid, stability and transfer diagnostics. Both use
+the Python 3.12 notebook environment above and read checksum-verified JSON.
+They reconstruct only the accepted development source for descriptive
+views. They do not fit estimators or re-evaluate the reserve. The current
+research run recorded no nominee and the seed-83108 reserve is unscored.
+The Phase 08 engineering checkpoint records the reconciled 3,000
+account-months and the accepted negative nomination result.
+[Approved Phase 08 protocol](../docs/05_ml/phase08_segmentation_scope_and_validation.md).
+
+From the repository root, the research entry point is
+`python -m nowa_customer_intelligence.models.segmentation.research`.
+The default workspace is `data/processed/phase08-segmentation-research/`.
+The runner requires a new workspace and retains its pre-fit evidence.
+Keep the completed default workspace for review. Pass `--workspace` to a
+new ignored directory only for an authorised research run. Set
+`NCI_SEGMENTATION_WORKSPACE` in the notebook kernel environment to select
+an existing report outside the default folder. If no default workspace is
+present, the notebooks still render offline descriptive analyses and
+indicate which sections need the verified report.
+
+Keep Registry databases, source exports, reports, binaries and rendered
+notebook review copies outside Git. Execute copies in fresh kernels and
+leave saved outputs and execution counters cleared in the repository.

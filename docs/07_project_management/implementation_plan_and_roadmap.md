@@ -23,7 +23,7 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 05 — Feature Engineering | Accepted and completed with documented limitations. |
 | 06 — Churn Modelling | Accepted and completed with documented predictive limitations. |
 | 07 — CLV Modelling | Accepted and completed with documented limitations. |
-| 08 — Customer Segmentation | Pending. |
+| 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09–14 | Retain their approved sequence. |
 
 ### 2.1 Historical draft phase table
@@ -530,4 +530,113 @@ implementation.
 | CLV-14 | Passed. Automated and notebook checks verified under NEDS v1.1. |
 | CLV-15 | Passed. Approved architecture and phase boundaries preserved. |
 
-**PHASE 08 — CUSTOMER SEGMENTATION: PENDING.**
+## 21. Phase 08 customer segmentation
+
+**PHASE 08 — CUSTOMER SEGMENTATION: ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS AND NEGATIVE MODEL NOMINATION.**
+
+The Project Owner approved SEG-PO-001 through SEG-PO-005. The evidence uses
+verified fictional Fieldwise Cloud exports and canonical accounts observed at
+UTC month end. The standalone Charter and complete approved roadmap were
+unavailable in the reviewed references. The sequence follows the owner brief
+and approved phase alignment. The experimental scope excludes commercial
+assignment, prior reserves and Phase 06 or Phase 07 predictions.
+[Approved scope and frozen protocol](../05_ml/phase08_segmentation_scope_and_validation.md).
+
+| Observation | Role | Visible | Complete history and eligible | Short history |
+|---|---|---:|---:|---:|
+| 31 March 2023 | Fit | 658 | 338 | 320 |
+| 31 December 2023 | Temporal candidate validation | 915 | 573 | 342 |
+| 31 March 2024 | Subsequent assessment | 1,000 | 658 | 342 |
+
+The primary modelling cohort requires a complete 12-calendar-month window
+and source attestation. Traditional RFM uses verified point-in-time gross
+issued GBP with exact arithmetic, deterministic tied quantile bands and
+frozen development boundaries. The cadence-specific method uses supported
+monthly and annual rules. Mixed cadence had only 21 development accounts
+against the 30-account floor. At the final date the traditional and
+cadence-aware methods assigned 658 and 619 accounts, with 418 exact matches
+on the 619 common assignments.
+
+Account usage requires an attributable whole-month record from one active
+episode. The one-day synthetic reporting lag leaves zero complete
+three-period usage windows at the agreed month ends. The March 2024 audit
+reconciled all 3,000 expected account-months. The earlier summary omitted
+82 with no known active episode and 78 with partial coverage. The other
+statuses were 1,839 observed, 967 awaiting reporting, 34 with multiple
+episodes and zero missing or unavailable. Financial and contractual
+evidence was unchanged. Three latest complete and available reporting
+months remain a deferred investigation subject to separate Project
+Owner approval. Older, available periods support descriptive analysis.
+FS-03 failed its 80% complete-window gate and was excluded. FS-01 has three
+effective financial coordinates, FS-02 has eight financial and contractual
+coordinates, and FS-02 without direct cadence has five. The batch preserves
+the accepted Phase 05 and Phase 07 registries.
+
+### 21.1 Experiment and limitations
+
+The frozen protocol assessed 45 configurations across K-Means, Ward and
+diagonal Gaussian mixtures at 2–6 groups. All completed and all iterative
+candidates converged. Development group support rejected 28 candidates.
+The other 17 advanced to stability assessment, where three failed the
+stability gate. The full set of overlapping rejection counts is in the
+approved scope record. No candidate passed every nomination gate. The
+financial two-group K-Means fit assigned 258 and 80 accounts, had silhouette
+0.745, and median subsample ARI 1.000 in both
+stability modes. Its cadence NMI was 0.793 and catalogue-rate NMI 0.822,
+both above the 0.65 ceiling. The no-cadence four-group K-Means candidate
+had support and stable resampling. Its common-space silhouette was 0.040
+at fit and 0.116 in December against the floor of 0.20. Ward has no native
+assignment. These results support financial descriptions and a negative
+nomination decision.
+
+December was used for frozen candidate comparison. March 2024 has historical
+financial-reference migration only because no model was nominated. Of 573
+shared traditional assignments, 541 retained their score and 32 changed.
+There was no subsequent model transfer. The isolated seed-83108 reserve has
+671 eligible accounts among 1,000 visible and remains unscored. Its distinct
+fictional client, Registry and source fingerprints are retained outside Git.
+
+Both notebooks are delivered without saved outputs and replay checksum-verified
+research reports in fresh kernels.
+[Financial and behavioural profiling](../../notebooks/05_customer_segmentation/09_rfm_and_customer_profiling.ipynb),
+[clustering and validation](../../notebooks/05_customer_segmentation/10_customer_clustering_and_validation.ipynb).
+
+### 21.2 Engineering assessment
+
+| Criterion | Result | Basis |
+|---|---|---|
+| SEG-01 | Passed | Five approved owner decisions recorded. |
+| SEG-02 | Passed | Unique account-month grain and eligibility reconciled. |
+| SEG-03 | Passed | Canonical account, episode and invoice attribution preserved. |
+| SEG-04 | Passed | Point-in-time windows, late facts and usage cut-offs verified. |
+| SEG-05 | Passed | Exact gross issuance preserved and reconciled. |
+| SEG-06 | Passed with documented limitations | All 3,000 expected periods reconciled. FS-03 failed complete-window coverage. |
+| SEG-07 | Passed with documented limitations | Frozen traditional and cadence-aware references verified. Mixed cadence has insufficient fitting support. |
+| SEG-08 | Passed | Training-only scaler, feature weights and validation applied. |
+| SEG-09 | Passed | Fixed candidate grid executed with recorded seeds and parameters. |
+| SEG-10 | Passed | Internal metrics, family diagnostics and common-space comparisons recorded. |
+| SEG-11 | Passed | Support screened using prespecified absolute and proportional floors. |
+| SEG-12 | Passed | Repeated seeds and controlled account subsampling evaluated. |
+| SEG-13 | Passed with documented limitations | December candidate transfer and historical RFM changes measured. No nominee for March model transfer. |
+| SEG-14 | Passed with documented limitations | Candidate and RFM profiles reconciled. No nominated operational segments. |
+| SEG-15 | Passed | Cadence, feature sensitivity, reactivation and catalogue effects quantified. |
+| SEG-16 | Passed | Prespecified gates produce a documented negative result. |
+| SEG-17 | Passed | Profiling notebook delivered and replayed. |
+| SEG-18 | Passed with documented limitations | Clustering notebook and fitted evidence delivered. Nominee-dependent March model transfer and reserve scoring remain unavailable. |
+| SEG-19 | Passed | Controlled tests, regression and artefact verification completed. |
+| SEG-20 | Passed | Accepted specifications, earlier evidence and phase boundaries preserved. |
+
+The Project Owner's conditional acceptance is now recorded for the engineering
+implementation, experimental clustering research and descriptive financial RFM
+analysis. The negative nomination result stands. Operational segment
+assignment, production deployment and commercial use remain unapproved.
+No real-customer validation or commercial effect has been demonstrated.
+
+Final verification passed 72 targeted tests and 1,132 regression tests.
+The historical Batch 09 model-fitting integration was excluded. Both
+notebooks replayed in fresh Python 3.12 kernels with 20 and 22 figures.
+Notebook schema, links, Ruff lint and format, dependency consistency,
+whitespace and retained artefact checksums passed. No Phase 08 research model
+was refitted, and the Phase 06 and Phase 07 frozen evidence remains intact.
+
+**PHASE 09 — EXPLAINABLE AI: PENDING.**
