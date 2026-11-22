@@ -26,7 +26,7 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
 | 10 — API Development | Accepted and completed with documented limitations. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. |
-| 11 — Dashboard Development | In progress. WP-11.1 accepted. WP-11.2 accepted and completed with documented limitations. WP-11.3 pending authorisation. Microsoft Power BI with Power Query, DAX and Python-prepared analytical datasets. |
+| 11 — Dashboard Development | In progress. WP-11.1 accepted. WP-11.2 accepted and completed with documented limitations. WP-11.3 accepted and completed with documented implementation limitations. WP-11.4 pending authorisation. Microsoft Power BI with Power Query, DAX and Python-prepared analytical datasets. |
 | 12 — MLOps | Pending. Retains its approved scope and position. |
 | 13 — Docker & AWS | Pending. Retains its approved scope and position. |
 | 14 — Testing & Documentation | Pending. Retains its approved scope and position. |
@@ -767,7 +767,7 @@ verify during Phase 11.
 
 The Project Owner formally initiated Phase 11 under BI-PO-001–007. WP-11.1
 is accepted as the project-definition and business-requirements baseline.
-WP-11.2 is authorised for analytical data architecture and contract
+WP-11.2 is accepted for analytical data architecture and contract
 specification. The six proposed pages depend on verified Fieldwise Cloud
 data, disclosure approval for research fields and successful quality gates.
 The WP-11.2 specification records the design checks, owner approvals and
@@ -780,8 +780,9 @@ packages require separate approval.
 The Project Owner approved the BI-DR-001–010 dispositions. Historical
 architecture and read-only Registry reuse are conditional. Local data
 governance and canonical NEDS are approved. The Windows PBIP approval
-covers a future fixture-only proof. Research field and cohort disclosure,
-historical export implementation and WP-11.3 are deferred. AGENTS.md
+covered the completed fixture-only proof. Research field and cohort
+disclosure and historical export implementation remain deferred.
+BI-DR-008 originally deferred WP-11.3 initiation. AGENTS.md
 was adopted in governance checkpoint `98b544277e17bf9a9287b25247471aa31c0a2aa6`.
 [Owner decision register](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#12-project-owner-decision-register).
 
@@ -796,12 +797,37 @@ documentation-only acceptance checkpoint.
 
 **WP-11.1 — ACCEPTED.**\
 **WP-11.2 — ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**\
-**WP-11.3 — PENDING AUTHORISATION.**
+**WP-11.3 — ACCEPTED AND COMPLETED WITH DOCUMENTED IMPLEMENTATION LIMITATIONS.**\
+**WP-11.4 — PENDING AUTHORISATION.**
 
-Analytical dataset implementation is pending. Historical exports require
-separate owner authorisation. Research disclosure remains deferred.
-The Windows PBIP proof is authorised for fixtures and remains unexecuted.
-Phases 12–14 remain pending.
+| Project Owner decision | Status | Approved scope |
+|---|---|---|
+| BI-DR-017 — WP-11.3 Initiation & Scope | **APPROVED** | Authorise conceptual and logical semantic architecture, relationships, date roles, KPI and financial semantics, identity, snapshot and usage coverage, research isolation, security, validation and documentation. Supersede BI-DR-008 for initiation within this design scope only. The Windows fixture proof retains its separate BI-DR-007 authority. Exports, Power Query and model implementation, report authoring and production DAX require separate authority. |
+
+BI-SM-001–006 are Approved. BI-SM-007 is Approved with Conditions for
+independently verified, allowlisted metadata within the physical contracts.
+BI-SM-008 is Deferred. The research isolation requirements and all 34
+research-field and associated cohort restrictions remain in force.
+BI-DR-019, Approved with Documented Limitations, accepts the design and
+fixture-only PBIP proof. BI-DR-020, Approved, authorises the controlled
+three-file documentation checkpoint and standard fast-forward publication.
+
+[WP-11.3.1 semantic model design](../06_deployment/phase11_power_bi_semantic_model_design.md),
+[WP-11.3.2 Windows fixture evidence](../06_deployment/phase11_power_bi_semantic_model_design.md#14-windows-technical-proof-and-engine-reconciliation),
+[WP-11.3 architectural decision register](../06_deployment/phase11_power_bi_semantic_model_design.md#10-architectural-decision-register),
+[Formal WP-11.3 acceptance](../06_deployment/phase11_power_bi_semantic_model_design.md#21-formal-project-owner-acceptance-and-documentation-checkpoint).
+
+BI-DR-006 historical export implementation and BI-DR-003–004 research
+field and cohort disclosure remain deferred. The BI-DR-007 fixture-only
+proof verified local PBIP save, close, reopen, refresh and semantic
+behaviour with fictional fixtures. PBIP is the preferred development
+and source-control format. The controlled PBIX fallback remains Not
+Tested. Historical bundle integration, production Power Query and DAX,
+and report authoring remain gated. BI-DR-018 remains an AWS proposal,
+and AWS connectivity and deployment remain unauthorised. BI-CT-09 and
+BI-CT-11 remain Not Tested for historical implementation. BI-CT-13 and
+BI-CT-16 remain Pending Owner
+Approval. Phases 12–14 remain pending.
 [Formal WP-11.2 acceptance](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#14-formal-wp-112-acceptance).
 
 | Approved decision | Architectural boundary | Acceptance condition |

@@ -48,6 +48,10 @@ logs/
 *.sqlite
 *.sqlite3
 
+# Power BI Desktop local cache and settings
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+
 # OS / IDE
 .DS_Store
 Thumbs.db
