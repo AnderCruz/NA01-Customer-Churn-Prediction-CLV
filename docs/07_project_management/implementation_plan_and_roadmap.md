@@ -25,7 +25,7 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 07 — CLV Modelling | Accepted and completed with documented limitations. |
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
-| 10 — API Development | In progress. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. WP-10.3 foundation implemented for review. |
+| 10 — API Development | In progress. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. WP-10.4–10.10 engineering complete with documented limitations. Owner review pending. |
 | 11 — Dashboard Development | Pending. Microsoft Power BI with Power Query, DAX and verified analytical datasets prepared in Python. |
 | 12 — MLOps | Retains its approved scope and position. |
 | 13 — Docker & AWS | Retains its approved scope and position. |
@@ -737,11 +737,16 @@ read-only Research & Analytics API. Phase 11's Power BI adoption adds no
 endpoint or integration requirement to the nine approved GET contracts.
 WP-10.2 finalises their specification within API-PO-001 through API-PO-005.
 
-WP-10.3 implements the route-free application factory, strict local
-settings, ASGI lifecycle, injectable catalogue boundary and safe errors.
-The foundation does not bind a listener or load research evidence. The nine
-approved endpoints, authenticated transport and measured API performance
-remain future work. WP-10.4 requires its own implementation authorisation.
+WP-10.3 established the application foundation and was synchronised before
+the implementation gates resumed. WP-10.4 through WP-10.10 implemented
+and audited the nine approved routes, scoped local access, the pinned
+catalogue, audit events, contract tests and the isolated API CI job.
+The controlled loopback workload was measured with synthetic fixtures.
+
+The engineering audit recommends Project Owner review with documented
+limitations. A populated retained-evidence release needs separate approval.
+Hosted CI execution remains pending an authorised GitHub workflow run.
+Phase 10 remains in progress pending formal acceptance.
 The specification retains release blockers and API-01 through API-20.
 [Phase 10 architecture and contracts](../06_deployment/phase10_api_architecture_and_contracts.md).
 

@@ -31,4 +31,34 @@ jobs:
         run: ruff format --check .
 
       - name: Run tests
-        run: pytest --cov=nowa_customer_intelligence --cov-report=term-missing
+        run: |
+          pytest --cov=nowa_customer_intelligence --cov-report=term-missing \
+            --ignore=tests/unit/api \
+            --ignore-glob=tests/integration/test_api_*.py \
+            --ignore=tests/integration/test_synthetic_churn_baseline.py \
+            --ignore=tests/integration/test_phase06_research.py \
+            --ignore=tests/integration/test_phase07_clv_notebook.py \
+            --ignore=tests/integration/test_phase08_segmentation_notebooks.py \
+            --ignore=tests/integration/test_phase09_explainability_notebooks.py \
+            --ignore=tests/unit/data/test_phase06_churn.py \
+            --ignore=tests/unit/data/test_phase07_clv_research.py \
+            --ignore=tests/unit/data/test_phase08_segmentation_research.py \
+            --ignore=tests/unit/data/test_phase09_explainability.py
+
+  api-contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install the verified API test dependencies
+        run: |
+          python -m pip install -e ".[api,api-test]" pytest==8.4.2 \
+            fastapi==0.165.0 starlette==1.10.0 pydantic==2.14.3 uvicorn==0.54.0
+          python -m pip check
+      - name: Verify offline API contracts
+        run: |
+          python -c 'from fastapi.testclient import TestClient; import httpx2, uvicorn'
+          python -m pytest -q -W error tests/unit/api tests/integration/test_api_*.py

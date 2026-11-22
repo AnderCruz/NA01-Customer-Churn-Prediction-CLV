@@ -2,8 +2,8 @@
 
 **Document ID** · NCI-API-001\
 **Version** · 0.2\
-**Status** · Approved WP-10.2 contracts with WP-10.3 foundation implemented for review\
-**Work package** · WP-10.3, FastAPI Application Foundation
+**Status** · Phase 10 engineering audited with documented limitations, owner acceptance pending\
+**Work package** · WP-10.10, Final Engineering Audit
 
 ## Authority and baseline
 
@@ -109,7 +109,7 @@ projection adapter or API-specific CI. [API placeholder](../../api/README.md),
 Priorities below retain the original draft FR classifications. An
 unmet Must remains an eventual MVP release blocker unless the owner
 explicitly revises scope. The five approved API-PO decisions govern the research API only.
-In the matrix, an API use is a design commitment pending implementation.
+In the matrix, Phase 10 API uses were verified against isolated synthetic fixtures.
 Rows retained offline, deferred, or blocked are not counted as addressed. [FR baseline](../02_requirements/functional_requirements.md),
 [NFR baseline](../02_requirements/non_functional_requirements.md),
 [MVP acceptance](../02_requirements/acceptance_criteria.md).
@@ -199,7 +199,9 @@ by a first-request side effect.
 The project Python is 3.12.3 and Pydantic is 2.14.3. FastAPI, Starlette,
 Uvicorn, HTTPX and HTTPX2 are absent from the main environment. The current
 `api` extra declares `fastapi>=0.115,<1.0` and
-`uvicorn[standard]>=0.30,<1.0`. CI currently installs `dev,notebooks`.
+`uvicorn[standard]>=0.30,<1.0`. The standard regression job installs
+`dev,notebooks`. The separate API job installs `api,api-test` and uses
+the verified application dependency versions.
 WP-10.2 used a temporary Python 3.12.3 environment and verified this minimal
 set with `pip check` and an offline disposable ASGI app.
 
@@ -284,11 +286,10 @@ errors, transport ceilings and structured audit events remain deferred.
 The main environment and project dependency declarations were left
 unchanged. Tests in the isolated Python 3.12.3 environment used FastAPI
 0.165.0, Starlette 1.10.0, Pydantic 2.14.3, Uvicorn 0.54.0, HTTPX2 2.16.2
-and pytest 8.4.2. The standard CI environment still omits the API extra,
-so the ASGI tests skip there. Use the isolated environment above and run
+and pytest 8.4.2. At WP-10.3 the standard CI environment omitted the API extra.
+WP-10.8 added the dedicated `api-contracts` job. Use the isolated environment above and run
 `python -m pytest -q -W error tests/unit/api tests/integration/test_api_foundation.py`
-with pytest installed. The proposed `api-test = ["httpx2==2.16.2"]`
-addition and API-enabled CI job remain part of WP-10.8.
+with pytest installed. The dedicated CI job now installs `.[api,api-test]` with the verified versions.
 
 [Factory](../../src/nowa_customer_intelligence/api/application.py),
 [settings](../../src/nowa_customer_intelligence/api/configuration.py),
@@ -694,6 +695,52 @@ end, without live evidence. Illustrative budgets pending measurement
 are ≤100 ms warm p95 and ≤2 s startup. NFR-002 (<2 s p95 for scoring
 excluding upstream retrieval) remains a future operational objective.
 
+### WP-10.9 reference workload
+
+Run from the repository root in the isolated API CI environment:
+
+```bash
+PYTHONPATH=src python tests/integration/benchmark_api.py
+```
+
+The script generates a temporary, pinned synthetic fixture and uses the
+controlled launcher on IPv4 loopback. It measures one worker, five cold
+starts to readiness, 30 warm-up GETs per route and 200 measured GETs per
+route at both concurrency 1 and 8. This uses 9 routes and
+3,600 timed requests.
+The client checks response status and records body bytes. Latency includes
+local transport, bearer checks where applicable, projection lookups and
+serialization. The component probes measure verification and bearer
+matching separately in-process. The run did not use retained research
+records, frozen models or protected reserves.
+
+The reference host was Linux WSL2 (kernel 6.18.58.1), Intel Core i7-11800H,
+16 logical CPUs and 16,244,584 KiB visible memory. Python 3.12.3 used
+FastAPI 0.165.0, Starlette 1.10.0, Pydantic 2.14.3, Uvicorn 0.54.0 and
+HTTPX2 2.16.2. Fixture bundle size was 8,442 bytes.
+Its manifest SHA-256 was `9a4771584de9129cfc58589b788c1797baa727e87ecb02b1fe72a5ffaabcf3d9`.
+
+| Route | C1 p50 / p95 (ms) | C8 p50 / p95 (ms) | Max body (bytes) |
+|---|---:|---:|---:|
+| `/health/live` | 1.422 / 2.012 | 8.811 / 13.519 | 17 |
+| `/health/ready` | 1.504 / 2.238 | 9.714 / 14.900 | 18 |
+| `/v1/research/capabilities` | 1.794 / 2.543 | 10.296 / 15.621 | 422 |
+| `/v1/research/models` | 1.610 / 2.333 | 8.667 / 12.827 | 2,171 |
+| `/v1/research/models/churn` | 1.564 / 1.905 | 9.282 / 13.910 | 1,187 |
+| `/v1/research/models/clv/evaluation` | 1.654 / 2.016 | 8.334 / 12.909 | 1,782 |
+| `/v1/research/models/churn/limitations` | 1.691 / 2.585 | 9.845 / 13.665 | 2,463 |
+| `/v1/research/models/clv/explainability` | 1.755 / 2.197 | 8.970 / 12.999 | 2,270 |
+| `/v1/research/segmentation/status` | 1.689 / 2.051 | 8.963 / 26.993 | 856 |
+
+All measured requests returned 200 on the final build. Cold startup
+p50/p95 was 571.138/627.003 ms and peak server RSS was
+56,052 KiB. Evidence verification p50/p95 was
+2.039/6.345 ms and bearer-only p50/p95 was
+0.002/0.003 ms. The loopback measurements apply
+to this host and representative bounded fixture. They establish neither
+a production SLA nor performance for the deferred scoring latency
+objective. [Reference benchmark](../../tests/integration/benchmark_api.py).
+
 ## Contract verification plan
 
 Future tests use offline pytest fixtures with FastAPI `TestClient` in a
@@ -713,7 +760,7 @@ changing only the relevant variable.
 | CT-05 | Evidence | Correct independent pin publishes once. Adjacent manifest plus report substitution, changed digest, length drift, missing/mismatched member, invalid UTF-8/JSON/schema, duplicate keys, symlinks, unapproved audience/protocol and model/feature mismatch fail closed. Assert no partial or stale snapshot. Replace files after startup and verify the same approved snapshot is returned until controlled restart. |
 | CT-06 | Disclosure | Validate that responses, logs and OpenAPI never contain credentials, raw query/body, account or episode identifiers, reserves, model paths or internal exceptions. Churn/CLV/segmentation/explainability payloads have only approved fields and scales. |
 | CT-07 | Lifecycle and OpenAPI | Test startup/shutdown and readiness 503 with healthy liveness 200, one request ID in headers and error body, and safe unknown failure handling. Canonical OpenAPI contains exactly seven secured research operations and two unversioned health operations with closed typed DTOs and error schemas. |
-| CT-08 | Bounded reliability | Measure the separate reference workload and startup protocol above. Verify response budgets, safe steady-state behaviour and exact repeatability on fixed fixtures. No benchmark result exists yet. |
+| CT-08 | Bounded reliability | Measure the separate reference workload and startup protocol above. Verify response budgets, safe steady-state behaviour and exact repeatability on fixed fixtures. The WP-10.9 reference table records the results. |
 
 WP-10.2 final verification passed 489 existing package, ingestion,
 normalisation, validation, synthetic Registry, Phase 05 feature and pipeline
@@ -740,6 +787,18 @@ concrete populated evidence release or certify implemented controls.
 
 ## Implementation increments
 
+### Sequential implementation record
+
+| Work package | Implementation and verification | Gate |
+|---|---|---|
+| WP-10.4 | Health and capabilities in `api/routes.py`, typed responses in `api/contracts.py`, access checks in `api/security.py`, and the application transport boundary. The default catalogue is absent. A trusted in-process fixture verifies the ready contract, and no retained evidence is served. The 54 API tests and 489 offline regression tests passed with Ruff, targeted mypy and dependency consistency. | Passed |
+| WP-10.5 | The model list and detail routes use the immutable catalogue in `api/research.py`. It independently verifies the manifest and all five projected JSON files, validates exact identities and publishes atomically. The 63 API tests and 413 offline regression tests passed. A populated release of retained research has not been authorised or generated. | Passed with isolated fixtures |
+| WP-10.6 | Evaluation, limitations, explainability and segmentation status use the typed projections assembled at startup. Isolated tests verify scientific units, required nulls, explanation scales, negative nomination and access precedence. The 68 API tests and 435 offline regression tests passed, with targeted mypy and dependency checks. | Passed with isolated fixtures |
+| WP-10.7 | `api/launcher.py` restricts the supported listener to authenticated loopback. `api/audit.py` logs allowlisted JSON events. Tests exercised live request policy through in-process ASGI, with the actual listener mocked in launcher tests. The 71 API tests and 405 regression tests passed. No external deployment was performed. | Passed |
+| WP-10.8 | Added canonical OpenAPI contract assertions and the isolated `api-contracts` CI job with the `api-test` extra. The API job install and command passed in a clean local checkout with 74 tests. The safe non-modelling regression passed all 1,092 tests. Hosted GitHub Actions execution awaits an authorised push. | Passed locally |
+| WP-10.9 | Verified restarted instance isolation and recovery. The 75 API tests and 413 offline regression tests passed. Five cold starts and 3,600 timed loopback requests across nine routes completed on a pinned fixture, with zero non-200 responses. Performance scope and method are recorded in the reference workload above. | Passed for the reference environment |
+| WP-10.10 | Reconciled all 20 acceptance criteria, checked strict wire types and safe OpenAPI examples, and reverified the final loopback build. The 77 API tests and 1,092 safe regressions passed. No retained research release or formal phase acceptance is included. | Passed with documented limitations |
+
 | Package | Responsibility and evidence | Prerequisites / approval |
 |---|---|---|
 | WP-10.1 | Completed architecture investigation and decision preparation | Gate 01 passed |
@@ -751,33 +810,78 @@ concrete populated evidence release or certify implemented controls.
 | WP-10.7 | Enforce auth, error redaction, input limits and safe audit wiring | WP-10.2/10.3. Land authorisation, fail-closed config, request limits and safe errors together with the first research route. WP-10.7 hardens and verifies controls |
 | WP-10.8 | Unit, integration, negative auth and OpenAPI tests; enable API CI | WP-10.3–10.7, tests developed with increments |
 | WP-10.9 | Reliability and reference workload verification | WP-10.8, owner-approved environment and budget |
-| WP-10.10 | Runbook, contract release notes, evidence matrix and acceptance | All criteria verified and owner accepts Phase 10 explicitly |
+| WP-10.10 | Runbook, evidence matrix and engineering recommendation | Engineering gates verified. Formal acceptance requires separate owner approval. |
 
 ## Acceptance matrix
 
-API-01 and API-02 have approval at design level. Operational proof of
-scope and architecture depends on implemented tests. API-03–20 remain
-pending implementation and verification.
+These statuses cover the engineering scope of the internal Research &
+Analytics API. They do not grant Phase 10 acceptance or authorise a
+retained evidence release. The original functional and non-functional
+requirements outside the Research API scope remain in the reconciliation.
 
 | ID | Requirement | Verification and expected evidence | Acceptance condition | Dependencies | Status |
 |---|---|---|---|---|---|
-| API-01 | Approved business scope | Review owner-approved scope and capability catalogue | Research-only exposure and exclusions approved | PO-001, WP-10.2 | Approved design |
-| API-02 | Architecture | Review component dependency and startup design | Owner agrees local modular service boundary | PO-002/003/004, WP-10.2 | Approved design |
-| API-03 | Versioning | OpenAPI and compatibility tests | Prefix and independent version fields stable | WP-10.4/10.8 | Pending implementation |
-| API-04 | Request contracts | Positive and negative request tests | Strict bounded inputs, unsupported fields rejected | WP-10.3/10.7/10.8 | Pending implementation |
-| API-05 | Response contracts | Schema and payload budget tests | Only closed, valid DTOs returned | WP-10.5/10.6/10.8 | Pending implementation |
-| API-06 | Safe errors | Exercise transport, validation, evidence and internal failures | Stable codes and no sensitive exception content | WP-10.7/10.8 | Pending implementation |
-| API-07 | Model provenance | Compare released cards to pinned fixtures | Identity, experiment, target and version match | PO-004, WP-10.5/10.8 | Pending implementation |
-| API-08 | Evidence integrity | Tamper, absence and incompatible bundle fixtures | Closed readiness, no substituted evidence | WP-10.3/10.6/10.8 | Pending implementation |
-| API-09 | Churn restrictions | Route absence and card assertions | Scope and weak metrics visible; no scoring or bands | WP-10.5/10.8 | Pending implementation |
-| API-10 | CLV semantics | Contract tests for target, grain, horizon and units | Gross issued GBP and clipping accurately described | WP-10.5/10.6/10.8 | Pending implementation |
-| API-11 | Segmentation restrictions | Assert non-nomination and denied assignments | Research status only | WP-10.6/10.8 | Pending implementation |
-| API-12 | XAI governance | Assert method, scale and safe projection | Distinct scales, no identities, local cases or causal claims | WP-10.6/10.8 | Pending implementation |
-| API-13 | Security | Access, binding, host and limits tests | Fail closed under unsafe config and unauthorised requests | PO-003, WP-10.7/10.8 | Pending implementation |
-| API-14 | Client isolation | Wrong audience and client override tests | Fixed audited scope and no cross-client reads | PO-003/004, WP-10.7/10.8 | Pending implementation |
-| API-15 | Configuration | Strict validation, missing secret and unsafe path fixtures | Invalid settings fail startup without secret disclosure | WP-10.3/10.8 | Pending implementation |
-| API-16 | Health and readiness | Lifespan tests with verified and unavailable evidence | Live remains observable and readiness gates every research request | WP-10.4/10.8 | Pending implementation |
-| API-17 | Observability | Inspect structured logs under success and failure | Correlated, bounded and redacted evidence | PO-005, WP-10.7/10.8 | Pending implementation |
-| API-18 | Automated verification | Offline CI and reference workload results | Unit/integration and agreed reliability tests pass | WP-10.8/10.9 | Pending implementation |
-| API-19 | OpenAPI and documentation | Contract snapshot and operator walkthrough | Versioned documentation matches protected implementation | WP-10.8/10.10 | Pending implementation |
-| API-20 | Reproducibility and boundaries | Repeat startup on fixtures and audit Git/artefacts | Same verified projection, no model execution or later-phase changes | WP-10.9/10.10 | Pending implementation |
+| API-01 | Approved business scope | Review owner-approved scope and capability catalogue | Research-only exposure and exclusions approved | PO-001, WP-10.2 | Passed |
+| API-02 | Architecture | Review component dependency and startup design | Owner agrees local modular service boundary | PO-002/003/004, WP-10.2 | Passed |
+| API-03 | Versioning | OpenAPI and compatibility tests | Prefix and independent version fields stable | WP-10.4/10.8 | Passed |
+| API-04 | Request contracts | Positive and negative request tests | Strict bounded inputs, unsupported fields rejected | WP-10.3/10.7/10.8 | Passed |
+| API-05 | Response contracts | Schema and payload budget tests | Only closed, valid DTOs returned | WP-10.5/10.6/10.8 | Passed |
+| API-06 | Safe errors | Exercise transport, validation, evidence and internal failures | Stable codes and no sensitive exception content | WP-10.7/10.8 | Passed |
+| API-07 | Model provenance | Compare released cards to pinned fixtures | Identity, experiment, target and version match | PO-004, WP-10.5/10.8 | Passed with documented limitations |
+| API-08 | Evidence integrity | Tamper, absence and incompatible bundle fixtures | Closed readiness, no substituted evidence | WP-10.3/10.6/10.8 | Passed with documented limitations |
+| API-09 | Churn restrictions | Route absence and card assertions | Scope and weak metrics visible; no scoring or bands | WP-10.5/10.8 | Passed |
+| API-10 | CLV semantics | Contract tests for target, grain, horizon and units | Gross issued GBP and clipping accurately described | WP-10.5/10.6/10.8 | Passed |
+| API-11 | Segmentation restrictions | Assert non-nomination and denied assignments | Research status only | WP-10.6/10.8 | Passed |
+| API-12 | XAI governance | Assert method, scale and safe projection | Distinct scales, no identities, local cases or causal claims | WP-10.6/10.8 | Passed |
+| API-13 | Security | Access, binding, host and limits tests | Fail closed under unsafe config and unauthorised requests | PO-003, WP-10.7/10.8 | Passed |
+| API-14 | Client isolation | Wrong audience and client override tests | Fixed audited scope and no cross-client reads | PO-003/004, WP-10.7/10.8 | Passed |
+| API-15 | Configuration | Strict validation, missing secret and unsafe path fixtures | Invalid settings fail startup without secret disclosure | WP-10.3/10.8 | Passed |
+| API-16 | Health and readiness | Lifespan tests with verified and unavailable evidence | Live remains observable and readiness gates every research request | WP-10.4/10.8 | Passed |
+| API-17 | Observability | Inspect structured logs under success and failure | Correlated, bounded and redacted evidence | PO-005, WP-10.7/10.8 | Passed |
+| API-18 | Automated verification | Offline CI and reference workload results | Unit/integration and agreed reliability tests pass | WP-10.8/10.9 | Passed with documented limitations |
+| API-19 | OpenAPI and documentation | Contract snapshot and operator walkthrough | Versioned documentation matches protected implementation | WP-10.8/10.10 | Passed |
+| API-20 | Reproducibility and boundaries | Repeat startup on fixtures and audit Git/artefacts | Same verified projection, no model execution or later-phase changes | WP-10.9/10.10 | Passed |
+
+### Final engineering review and operator boundary
+
+The implemented Python modular monolith exposes only the nine approved GET
+routes. The health surface is independent of evidence for liveness and
+checks the atomically published snapshot for readiness. All research
+responses require the fixed fictional audience and research authority.
+The API reads pinned, closed projected JSON at startup and derives typed
+responses in memory. No request opens a source report or model binary.
+The architecture preserves the approved Python, FastAPI and Power BI split.
+
+The local engineering verification passed 77 isolated API tests and
+1,092 safe existing regression tests. The regression exclusions are recorded
+in the CI workflow. Historical model-fitting, scoring and research notebook
+collections were excluded from this verification. Ruff, targeted mypy
+and dependency consistency passed. The API CI job was installed and run from
+a clean local checkout. Hosted GitHub Actions has not executed this change.
+The final audit removed unintended type coercion for approval flags and
+integer fields. An initial repeat of the startup workload exposed a strict
+UTC conversion error. The parser now converts the validated timestamp
+explicitly, the published timestamp has a regression assertion, and the
+full reference workload passed on the corrected build.
+
+API-07 and API-08 are limited to fixture-backed verification. A populated
+release of retained summaries and its independently supplied pin require
+explicit Project Owner approval. API-18 is limited to local CI validation
+and the measured single-host workload. The secure bundle reader requires
+POSIX directory-relative descriptor and no-follow support and fails closed
+where unavailable.
+
+Use the default in-process factory for offline application verification.
+For an authorised demonstration with an approved release, supply the
+settings in this document from the operating environment, then use
+`python -m nowa_customer_intelligence.api.launcher`. The approved launcher
+refuses non-loopback settings, disables proxy headers and emits redacted
+audit records. Keep the secret and pin outside the bundle and outside source
+control. Rotate the bearer secret at expiry. Update the release and its
+independent pin through the approved release process, then restart for
+atomic verification. A valid configuration with unreadable evidence keeps
+liveness available and readiness at 503. No public deployment, multi-tenant
+access, operational inference or dashboard implementation was introduced.
+
+Engineering recommendation is owner audit with the documented limitations.
+Phase 10 remains in progress pending formal acceptance. Phase 11 remains pending.

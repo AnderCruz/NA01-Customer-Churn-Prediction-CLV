@@ -14,6 +14,9 @@ class ErrorCode(StrEnum):
     FORBIDDEN = "FORBIDDEN"
     NOT_FOUND = "NOT_FOUND"
     METHOD_NOT_ALLOWED = "METHOD_NOT_ALLOWED"
+    PAYLOAD_TOO_LARGE = "PAYLOAD_TOO_LARGE"
+    URI_TOO_LONG = "URI_TOO_LONG"
+    HEADERS_TOO_LARGE = "HEADERS_TOO_LARGE"
     VALIDATION_ERROR = "VALIDATION_ERROR"
     SERVICE_UNAVAILABLE = "SERVICE_UNAVAILABLE"
     EVIDENCE_UNAVAILABLE = "EVIDENCE_UNAVAILABLE"
@@ -26,6 +29,9 @@ _ERRORS = {
     ErrorCode.FORBIDDEN: (403, "This operation is not permitted."),
     ErrorCode.NOT_FOUND: (404, "The resource was not found."),
     ErrorCode.METHOD_NOT_ALLOWED: (405, "This method is not allowed."),
+    ErrorCode.PAYLOAD_TOO_LARGE: (413, "The request body is too large."),
+    ErrorCode.URI_TOO_LONG: (414, "The request target is too long."),
+    ErrorCode.HEADERS_TOO_LARGE: (431, "The request headers are too large."),
     ErrorCode.VALIDATION_ERROR: (422, "The request parameters are invalid."),
     ErrorCode.SERVICE_UNAVAILABLE: (503, "The service is not ready."),
     ErrorCode.EVIDENCE_UNAVAILABLE: (503, "Research evidence is unavailable."),

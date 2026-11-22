@@ -42,8 +42,17 @@ def test_factory_is_independent_and_has_approved_metadata() -> None:
     assert app.state.foundation.configuration == configuration
     assert other.state.foundation.configuration.log_level == "INFO"
     assert app.state.foundation is not other.state.foundation
-    assert type(app.routes) is list and app.routes == []
-    assert app.openapi()["paths"] == {}
+    assert set(app.openapi()["paths"]) == {
+        "/health/live",
+        "/health/ready",
+        "/v1/research/capabilities",
+        "/v1/research/models",
+        "/v1/research/models/{model_id}",
+        "/v1/research/models/{model_id}/evaluation",
+        "/v1/research/models/{model_id}/limitations",
+        "/v1/research/models/{model_id}/explainability",
+        "/v1/research/segmentation/status",
+    }
     assert not app.router.redirect_slashes
 
 
@@ -79,7 +88,7 @@ demo = ApiConfiguration(
     bearer_secret=SecretStr("fixture_secret_for_validation_123456"),
     bearer_expires_at=datetime.now(UTC) + timedelta(hours=1),
 )
-assert create_app().routes == create_app(demo).routes == []
+assert set(create_app().openapi()["paths"]) == set(create_app(demo).openapi()["paths"])
 for name in ("uvicorn", "pandas", "numpy", "sklearn", "joblib", "shap"):
     assert name not in sys.modules, name
 """,
@@ -160,13 +169,6 @@ def test_unexpected_lifespan_failure_is_sanitised(fail_on_start: bool) -> None:
 @pytest.mark.parametrize(
     "path",
     [
-        "/health/live",
-        "/health/ready",
-        "/v1/research/capabilities",
-        "/v1/research/models",
-        "/v1/research/models/churn",
-        "/v1/research/models/clv/evaluation",
-        "/v1/research/segmentation/status",
         "/v1/internal/clv/predict",
         "/v1/score",
         "/docs",

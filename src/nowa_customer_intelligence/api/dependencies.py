@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Protocol
 from uuid import UUID
 
-from starlette.requests import Request
+from starlette.requests import HTTPConnection, Request
 
 from .configuration import ApiConfiguration
 from .errors import ApiFailure, ErrorCode
@@ -38,7 +38,7 @@ class FoundationState:
     catalogue: ResearchCatalogue | None = None
 
 
-def get_foundation_state(request: Request) -> FoundationState:
+def get_foundation_state(request: HTTPConnection) -> FoundationState:
     state: FoundationState = request.app.state.foundation
     return state
 
