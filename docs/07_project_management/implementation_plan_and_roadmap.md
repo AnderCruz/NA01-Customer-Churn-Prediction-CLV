@@ -25,8 +25,11 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 07 — CLV Modelling | Accepted and completed with documented limitations. |
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
-| 10 — API Development | Pending. |
-| 11–14 | Retain their approved sequence. |
+| 10 — API Development | In progress. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. WP-10.3 foundation implemented for review. |
+| 11 — Dashboard Development | Pending. Microsoft Power BI with Power Query, DAX and verified analytical datasets prepared in Python. |
+| 12 — MLOps | Retains its approved scope and position. |
+| 13 — Docker & AWS | Retains its approved scope and position. |
+| 14 — Testing & Documentation | Retains its approved scope and position. |
 
 ### 2.1 Historical draft phase table
 
@@ -718,4 +721,77 @@ cleared outputs and counters.
 | XAI-19 | Tests and reproducibility | Passed | Targeted and repository regression tests, fingerprints and notebook replay passed. |
 | XAI-20 | Prior phase boundaries | Passed | Accepted checkpoints, frozen outcomes and reserves preserved. |
 
-**PHASE 10 — API DEVELOPMENT: PENDING.**
+## 23. Phase 10 API development
+
+**PHASE 10 — API DEVELOPMENT: IN PROGRESS.**
+
+Gate 01 verified the accepted Phase 09 audit and corrective checkpoint against
+live GitHub main. WP-10.1 prepared the local-first, read-only research API
+design. The Project Owner approved API-PO-001 through API-PO-005 on
+21 November 2026. WP-10.2 records the nine GET contracts, authenticated
+loopback boundary, pinned evidence catalogue and reliability requirements.
+The Phase 09 acceptance and model-use restrictions remain in force.
+
+FastAPI and Pydantic are the approved technologies for the internal,
+read-only Research & Analytics API. Phase 11's Power BI adoption adds no
+endpoint or integration requirement to the nine approved GET contracts.
+WP-10.2 finalises their specification within API-PO-001 through API-PO-005.
+
+WP-10.3 implements the route-free application factory, strict local
+settings, ASGI lifecycle, injectable catalogue boundary and safe errors.
+The foundation does not bind a listener or load research evidence. The nine
+approved endpoints, authenticated transport and measured API performance
+remain future work. WP-10.4 requires its own implementation authorisation.
+The specification retains release blockers and API-01 through API-20.
+[Phase 10 architecture and contracts](../06_deployment/phase10_api_architecture_and_contracts.md).
+
+## 24. Phase 11 dashboard development
+
+**PHASE 11 — DASHBOARD DEVELOPMENT: PENDING.**
+
+The Project Owner approved the technology direction and DASH-PO-001 through
+DASH-PO-004. The acceptance conditions below define the architecture to
+verify during Phase 11.
+
+| Approved decision | Architectural boundary | Acceptance condition |
+|---|---|---|
+| DASH-PO-001 — Power BI as the Primary Dashboard Platform | Microsoft Power BI is the primary Phase 11 platform. The Streamlit primary-dashboard choice is superseded. | Active roadmap and architecture references identify Power BI as the approved dashboard technology. |
+| DASH-PO-002 — Python as the Analytics and Data Preparation Engine | Python owns data engineering, feature engineering, machine learning, explainable AI and verified dataset preparation. Power Query prepares the inputs within Power BI, the semantic model defines relationships and grain, and DAX expresses analytical measures. | The architecture separates Python analytics and preparation from Power BI semantic and reporting responsibilities. |
+| DASH-PO-003 — Verified Analytical Datasets for Power BI Integration | Initial reports may use versioned, verified analytical datasets without FastAPI at runtime. Dataset contracts, refresh procedures and semantic models belong to Phase 11. | The architecture records the dataset boundary and preserves the nine approved Phase 10 GET endpoints. |
+| DASH-PO-004 — Synthetic Research and Demonstration Scope | Initial reports use authorised synthetic research and retain all accepted churn, CLV, segmentation and explainability limitations. | Experimental results are explicitly excluded from validated commercial prediction claims. |
+
+| Technology | Approved responsibility |
+|---|---|
+| Python | Data engineering, feature engineering, machine learning and explainable AI. Prepare the verified analytical datasets used by the dashboard. |
+| FastAPI and Pydantic | Phase 10 internal research API and typed contracts. |
+| Microsoft Power BI | Primary business intelligence and dashboard platform, replacing Streamlit in the active roadmap. |
+| Power Query and DAX | Power Query prepares the dashboard inputs. The Power BI semantic model defines relationships and grain, and DAX expresses reviewed analytical measures. |
+
+The proposed initial Power BI integration uses verified, versioned analytical
+datasets prepared in Python. These datasets must carry their provenance,
+analytical grain, units, evidence scope and limitations. The dashboard has
+no mandatory runtime dependency on FastAPI. Dataset delivery and refresh,
+semantic-model details, publishing and access boundaries remain Phase 11
+design work. Any future Power BI-specific API integration requires a
+separate scope decision.
+
+Phase 11 retains the accepted Phase 01–09 records and scientific limits.
+Churn remains diagnostic research, billed value remains the six-month gross
+issued GBP proxy, clustering has no operational nominee, and explainability
+describes model behaviour. Dashboard technology approval does not release
+operational scores, risk bands, revenue-at-risk estimates or recommendations.
+Phase 12 retains MLOps, Phase 13 retains Docker and AWS, and Phase 14 retains
+testing and documentation.
+
+### 24.1 Historical Streamlit references
+
+The approved Power BI direction supersedes Streamlit as the primary
+dashboard choice. Earlier records remain available for traceability.
+
+| Historical reference | Active interpretation |
+|---|---|
+| [Proposed ADR-007](../03_architecture/architecture_decisions.md#adr-007-streamlit-for-mvp-dashboard) | The proposed Streamlit MVP dashboard is superseded by the Power BI direction. |
+| [Baseline approval register and PO-006](documentation_review_and_approval.md#6-product-owner-decisions) | The historical selection stands as an approval record. Its primary dashboard choice is superseded. The earlier statement about core batch scoring does not authorise operational scoring under the current research scope. |
+| [System architecture](../03_architecture/system_architecture.md), [deployment and MLOps strategy](../06_deployment/deployment_and_mlops_strategy.md) and [business case](../01_business/business_case.md) | Streamlit diagrams, technology lists and MVP descriptions reflect the earlier direction. Use the active roadmap for the primary dashboard choice. |
+| [MVP technical design](../03_architecture/mvp_architecture_and_technical_design.md) and [contract revision readiness assessment](../04_data/contract_revision_readiness_and_decision_decomposition.md) | Historical implementation caution and post-MVP Streamlit references do not govern the approved Phase 11 platform. |
+| [Repository README](../../README.md), [dashboard placeholder](../../dashboard/README.md) and [optional dashboard dependency](../../pyproject.toml) | These still refer to Streamlit. They require alignment when Phase 11 work is authorised. The dependency declaration records an existing extra and confers no implementation approval. |
