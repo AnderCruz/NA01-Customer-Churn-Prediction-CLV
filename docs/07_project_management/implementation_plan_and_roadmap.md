@@ -26,7 +26,7 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
 | 10 — API Development | Accepted and completed with documented limitations. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. |
-| 11 — Dashboard Development | Pending. Microsoft Power BI with Power Query, DAX and verified analytical datasets prepared in Python. |
+| 11 — Dashboard Development | In progress. WP-11.1 accepted, WP-11.2 pending formal acceptance, WP-11.3 pending. Microsoft Power BI with Power Query, DAX and Python-prepared analytical datasets. |
 | 12 — MLOps | Pending. Retains its approved scope and position. |
 | 13 — Docker & AWS | Pending. Retains its approved scope and position. |
 | 14 — Testing & Documentation | Pending. Retains its approved scope and position. |
@@ -759,11 +759,31 @@ accepted scope.
 
 ## 24. Phase 11 dashboard development
 
-**PHASE 11 — DASHBOARD DEVELOPMENT: PENDING.**
+**PHASE 11 — POWER BI DASHBOARD DEVELOPMENT: IN PROGRESS.**
 
 The Project Owner approved the technology direction and DASH-PO-001 through
 DASH-PO-004. The acceptance conditions below define the architecture to
 verify during Phase 11.
+
+The Project Owner formally initiated Phase 11 under BI-PO-001–007. WP-11.1
+is accepted as the project-definition and business-requirements baseline.
+WP-11.2 is authorised for analytical data architecture and contract
+specification. The six proposed pages depend on verified Fieldwise Cloud
+data, disclosure approval for research fields and successful quality gates.
+The WP-11.2 specification records the design checks, owner approvals and
+implementation checks separately. Local Windows authoring verification
+is required. Dataset implementation, research disclosure and later work
+packages require separate approval.
+[WP-11.1 decision register](../06_deployment/phase11_power_bi_project_definition.md#project-owner-decisions),
+[WP-11.2 analytical data contracts](../06_deployment/phase11_analytical_data_architecture_and_contracts.md).
+
+The Project Owner approved the BI-DR-001–010 dispositions. Historical
+architecture and read-only Registry reuse are conditional. Local data
+governance and canonical NEDS are approved. The Windows PBIP approval
+covers a future fixture-only proof. Research field and cohort disclosure,
+historical export implementation and WP-11.3 are deferred. WP-11.2 is
+pending formal acceptance. AGENTS.md is prepared for separate adoption.
+[Owner decision register](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#12-project-owner-decision-register).
 
 | Approved decision | Architectural boundary | Acceptance condition |
 |---|---|---|
