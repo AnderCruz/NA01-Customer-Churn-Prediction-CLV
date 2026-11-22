@@ -2,7 +2,7 @@
 
 **Document ID** · NCI-API-001\
 **Version** · 0.2\
-**Status** · Phase 10 engineering audited with documented limitations, owner acceptance pending\
+**Status** · Phase 10 accepted and completed with documented limitations\
 **Work package** · WP-10.10, Final Engineering Audit
 
 ## Authority and baseline
@@ -16,7 +16,7 @@ and the two working copies were restored from HEAD with owner authorisation.
 WP-10.2 reverified the same local and live refs, the clean index and the
 expected unstaged WP-10.1 roadmap and specification. Both accepted notebooks
 matched HEAD. The Project Owner approved API-PO-001–005 on 21 November 2026.
-The approval fixes the architecture and scope. Implementation remains a later increment.
+That approval fixed the architecture and scope for the subsequent implementation increments.
 
 NEDS v1.1 sections 10, 12, 14–16 and 21 govern testing, Python API design, security,
 Git and documentation. ADR-001–004 bind the modular-monolith, local-first,
@@ -781,9 +781,9 @@ against CT-01–CT-08.
 | API-PO-004 | Pinned and verified research evidence | Independent release pin, allowlisted projections, no partial readiness, model loading or reserve exposure. |
 | API-PO-005 | Reliability, testing and deployment boundaries | Safe request correlation, offline CI, measured reliability and no later-phase infrastructure. |
 
-The Project Owner approved all five for the Phase 10 research API. This
-work package defines their implementation contracts. It does not approve a
-concrete populated evidence release or certify implemented controls.
+The Project Owner approved all five decisions for the Phase 10 research API.
+The accepted implementation follows these contracts. A populated evidence
+release requires separate approval.
 
 ## Implementation increments
 
@@ -795,9 +795,9 @@ concrete populated evidence release or certify implemented controls.
 | WP-10.5 | The model list and detail routes use the immutable catalogue in `api/research.py`. It independently verifies the manifest and all five projected JSON files, validates exact identities and publishes atomically. The 63 API tests and 413 offline regression tests passed. A populated release of retained research has not been authorised or generated. | Passed with isolated fixtures |
 | WP-10.6 | Evaluation, limitations, explainability and segmentation status use the typed projections assembled at startup. Isolated tests verify scientific units, required nulls, explanation scales, negative nomination and access precedence. The 68 API tests and 435 offline regression tests passed, with targeted mypy and dependency checks. | Passed with isolated fixtures |
 | WP-10.7 | `api/launcher.py` restricts the supported listener to authenticated loopback. `api/audit.py` logs allowlisted JSON events. Tests exercised live request policy through in-process ASGI, with the actual listener mocked in launcher tests. The 71 API tests and 405 regression tests passed. No external deployment was performed. | Passed |
-| WP-10.8 | Added canonical OpenAPI contract assertions and the isolated `api-contracts` CI job with the `api-test` extra. The API job install and command passed in a clean local checkout with 74 tests. The safe non-modelling regression passed all 1,092 tests. Hosted GitHub Actions execution awaits an authorised push. | Passed locally |
+| WP-10.8 | Added canonical OpenAPI contract assertions and the isolated `api-contracts` CI job with the `api-test` extra. The API job install and command passed in a clean local checkout with 74 tests. The safe non-modelling regression passed all 1,092 tests. Hosted verification of the final checkpoint is recorded below. | Passed locally at this increment |
 | WP-10.9 | Verified restarted instance isolation and recovery. The 75 API tests and 413 offline regression tests passed. Five cold starts and 3,600 timed loopback requests across nine routes completed on a pinned fixture, with zero non-200 responses. Performance scope and method are recorded in the reference workload above. | Passed for the reference environment |
-| WP-10.10 | Reconciled all 20 acceptance criteria, checked strict wire types and safe OpenAPI examples, and reverified the final loopback build. The 77 API tests and 1,092 safe regressions passed. No retained research release or formal phase acceptance is included. | Passed with documented limitations |
+| WP-10.10 | Reconciled all 20 acceptance criteria, checked strict wire types and safe OpenAPI examples, and reverified the final loopback build. The 77 API tests and 1,092 safe regressions passed. The engineering audit preceded formal Project Owner acceptance and used isolated fixtures. | Passed with documented limitations |
 
 | Package | Responsibility and evidence | Prerequisites / approval |
 |---|---|---|
@@ -810,14 +810,13 @@ concrete populated evidence release or certify implemented controls.
 | WP-10.7 | Enforce auth, error redaction, input limits and safe audit wiring | WP-10.2/10.3. Land authorisation, fail-closed config, request limits and safe errors together with the first research route. WP-10.7 hardens and verifies controls |
 | WP-10.8 | Unit, integration, negative auth and OpenAPI tests; enable API CI | WP-10.3–10.7, tests developed with increments |
 | WP-10.9 | Reliability and reference workload verification | WP-10.8, owner-approved environment and budget |
-| WP-10.10 | Runbook, evidence matrix and engineering recommendation | Engineering gates verified. Formal acceptance requires separate owner approval. |
+| WP-10.10 | Runbook, evidence matrix and engineering recommendation | Engineering gates verified. Formal acceptance is recorded below. |
 
 ## Acceptance matrix
 
-These statuses cover the engineering scope of the internal Research &
-Analytics API. They do not grant Phase 10 acceptance or authorise a
-retained evidence release. The original functional and non-functional
-requirements outside the Research API scope remain in the reconciliation.
+These statuses apply to the accepted Internal Research & Analytics API.
+The requirements reconciliation retains the original functional and
+non-functional requirements outside that scope.
 
 | ID | Requirement | Verification and expected evidence | Acceptance condition | Dependencies | Status |
 |---|---|---|---|---|---|
@@ -838,7 +837,7 @@ requirements outside the Research API scope remain in the reconciliation.
 | API-15 | Configuration | Strict validation, missing secret and unsafe path fixtures | Invalid settings fail startup without secret disclosure | WP-10.3/10.8 | Passed |
 | API-16 | Health and readiness | Lifespan tests with verified and unavailable evidence | Live remains observable and readiness gates every research request | WP-10.4/10.8 | Passed |
 | API-17 | Observability | Inspect structured logs under success and failure | Correlated, bounded and redacted evidence | PO-005, WP-10.7/10.8 | Passed |
-| API-18 | Automated verification | Offline CI and reference workload results | Unit/integration and agreed reliability tests pass | WP-10.8/10.9 | Passed with documented limitations |
+| API-18 | Automated verification | Local offline checks, hosted GitHub Actions for the accepted checkpoint and reference workload results | API tests, safe regressions and agreed reliability checks pass | WP-10.8/10.9 | Passed |
 | API-19 | OpenAPI and documentation | Contract snapshot and operator walkthrough | Versioned documentation matches protected implementation | WP-10.8/10.10 | Passed |
 | API-20 | Reproducibility and boundaries | Repeat startup on fixtures and audit Git/artefacts | Same verified projection, no model execution or later-phase changes | WP-10.9/10.10 | Passed |
 
@@ -856,8 +855,7 @@ The local engineering verification passed 77 isolated API tests and
 1,092 safe existing regression tests. The regression exclusions are recorded
 in the CI workflow. Historical model-fitting, scoring and research notebook
 collections were excluded from this verification. Ruff, targeted mypy
-and dependency consistency passed. The API CI job was installed and run from
-a clean local checkout. Hosted GitHub Actions has not executed this change.
+and dependency consistency passed.
 The final audit removed unintended type coercion for approval flags and
 integer fields. An initial repeat of the startup workload exposed a strict
 UTC conversion error. The parser now converts the validated timestamp
@@ -866,10 +864,9 @@ full reference workload passed on the corrected build.
 
 API-07 and API-08 are limited to fixture-backed verification. A populated
 release of retained summaries and its independently supplied pin require
-explicit Project Owner approval. API-18 is limited to local CI validation
-and the measured single-host workload. The secure bundle reader requires
-POSIX directory-relative descriptor and no-follow support and fails closed
-where unavailable.
+explicit Project Owner approval. The secure bundle reader requires POSIX
+directory-relative descriptor and no-follow support and fails closed where
+unavailable. The reference workload remains a single-host measurement.
 
 Use the default in-process factory for offline application verification.
 For an authorised demonstration with an approved release, supply the
@@ -883,5 +880,36 @@ atomic verification. A valid configuration with unreadable evidence keeps
 liveness available and readiness at 503. No public deployment, multi-tenant
 access, operational inference or dashboard implementation was introduced.
 
-Engineering recommendation is owner audit with the documented limitations.
-Phase 10 remains in progress pending formal acceptance. Phase 11 remains pending.
+## Project Owner acceptance
+
+**PHASE 10 — API DEVELOPMENT: ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**
+
+The Project Owner formally accepted checkpoint
+`8403b4fc44000f2744350d03a09c1052b4391c7e` for the Internal Research &
+Analytics API. Acceptance covers the modular FastAPI architecture, nine GET
+endpoints, Pydantic and OpenAPI contracts, authentication and authorisation,
+verified evidence architecture, safe errors and structured audit logging.
+The approved access boundary is read-only synthetic research through
+in-process or authenticated loopback access. Production or commercial deployment,
+operational model scoring, customer-specific predictions, retained-evidence
+publication and multi-tenant access remain outside this approval.
+
+### Hosted GitHub Actions verification
+
+The `CI` workflow completed successfully on 22 November 2026 after the
+push of the accepted checkpoint to `main`. Both jobs used CPython 3.12.16
+and installed their declared dependencies successfully.
+[GitHub Actions run 45032629816](https://github.com/AnderCruz/Customer-Churn-Prediction-CLV/actions/runs/45032629816).
+
+| Job | Job ID | Verified result |
+|---|---|---|
+| `api-contracts` | `137239343696` | 77 API tests passed with zero failures or skips. Dependency consistency passed. |
+| `quality-and-tests` | `137239344022` | 1,092 safe regression tests passed with zero failures or skips. Ruff lint and formatting passed. |
+
+The safe regression job excluded the API tests, which ran separately, and
+the nine research collections specified in the CI workflow. This run
+satisfies the hosted verification requirement for API-18. API-07 and API-08
+remain accepted with the documented release and filesystem limitations.
+
+**PHASE 11 — DASHBOARD DEVELOPMENT: PENDING.** Formal initiation requires
+separate Project Owner authorisation.

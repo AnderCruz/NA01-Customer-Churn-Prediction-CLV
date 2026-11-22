@@ -25,11 +25,11 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 07 — CLV Modelling | Accepted and completed with documented limitations. |
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
-| 10 — API Development | In progress. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. WP-10.4–10.10 engineering complete with documented limitations. Owner review pending. |
+| 10 — API Development | Accepted and completed with documented limitations. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. |
 | 11 — Dashboard Development | Pending. Microsoft Power BI with Power Query, DAX and verified analytical datasets prepared in Python. |
-| 12 — MLOps | Retains its approved scope and position. |
-| 13 — Docker & AWS | Retains its approved scope and position. |
-| 14 — Testing & Documentation | Retains its approved scope and position. |
+| 12 — MLOps | Pending. Retains its approved scope and position. |
+| 13 — Docker & AWS | Pending. Retains its approved scope and position. |
+| 14 — Testing & Documentation | Pending. Retains its approved scope and position. |
 
 ### 2.1 Historical draft phase table
 
@@ -723,7 +723,7 @@ cleared outputs and counters.
 
 ## 23. Phase 10 API development
 
-**PHASE 10 — API DEVELOPMENT: IN PROGRESS.**
+**PHASE 10 — API DEVELOPMENT: ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**
 
 Gate 01 verified the accepted Phase 09 audit and corrective checkpoint against
 live GitHub main. WP-10.1 prepared the local-first, read-only research API
@@ -743,12 +743,19 @@ and audited the nine approved routes, scoped local access, the pinned
 catalogue, audit events, contract tests and the isolated API CI job.
 The controlled loopback workload was measured with synthetic fixtures.
 
-The engineering audit recommends Project Owner review with documented
-limitations. A populated retained-evidence release needs separate approval.
-Hosted CI execution remains pending an authorised GitHub workflow run.
-Phase 10 remains in progress pending formal acceptance.
-The specification retains release blockers and API-01 through API-20.
-[Phase 10 architecture and contracts](../06_deployment/phase10_api_architecture_and_contracts.md).
+The Project Owner formally accepted checkpoint
+`8403b4fc44000f2744350d03a09c1052b4391c7e`. Hosted `CI` confirmed
+77 API tests and 1,092 safe regression tests passed, completing hosted
+verification for API-18.
+[GitHub Actions run 45032629816](https://github.com/AnderCruz/Customer-Churn-Prediction-CLV/actions/runs/45032629816).
+
+API-07 retains the separate approval requirement for a populated
+retained-evidence release and its independent pin. API-08 retains the
+secure reader's supported POSIX filesystem requirement. Production or
+commercial deployment, operational scoring, customer-specific predictions,
+retained-evidence publication and multi-tenant access remain outside the
+accepted scope.
+[Phase 10 acceptance and verification](../06_deployment/phase10_api_architecture_and_contracts.md#project-owner-acceptance).
 
 ## 24. Phase 11 dashboard development
 
