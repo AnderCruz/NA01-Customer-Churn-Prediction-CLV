@@ -26,7 +26,7 @@ The approved 14-phase Project Roadmap governs phase order and acceptance. The co
 | 08 — Customer Segmentation | Accepted and completed with documented limitations and negative model nomination. |
 | 09 — Explainable AI | Accepted and completed with documented limitations. |
 | 10 — API Development | Accepted and completed with documented limitations. FastAPI and Pydantic for the approved internal, read-only Research & Analytics API. |
-| 11 — Dashboard Development | In progress. WP-11.1 accepted, WP-11.2 pending formal acceptance, WP-11.3 pending. Microsoft Power BI with Power Query, DAX and Python-prepared analytical datasets. |
+| 11 — Dashboard Development | In progress. WP-11.1 accepted. WP-11.2 accepted and completed with documented limitations. WP-11.3 pending authorisation. Microsoft Power BI with Power Query, DAX and Python-prepared analytical datasets. |
 | 12 — MLOps | Pending. Retains its approved scope and position. |
 | 13 — Docker & AWS | Pending. Retains its approved scope and position. |
 | 14 — Testing & Documentation | Pending. Retains its approved scope and position. |
@@ -781,9 +781,28 @@ The Project Owner approved the BI-DR-001–010 dispositions. Historical
 architecture and read-only Registry reuse are conditional. Local data
 governance and canonical NEDS are approved. The Windows PBIP approval
 covers a future fixture-only proof. Research field and cohort disclosure,
-historical export implementation and WP-11.3 are deferred. WP-11.2 is
-pending formal acceptance. AGENTS.md is prepared for separate adoption.
+historical export implementation and WP-11.3 are deferred. AGENTS.md
+was adopted in governance checkpoint `98b544277e17bf9a9287b25247471aa31c0a2aa6`.
 [Owner decision register](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#12-project-owner-decision-register).
+
+BI-DR-011 approves the historical reporting definitions. The single
+reconstruction authorised by BI-DR-012 matched all accepted source and
+typed-evidence fingerprints, reconciled all historical episode mappings
+and verified the financial controls. BI-DR-013 defined the acceptance
+boundary. BI-DR-014 accepts the reproduced historical reference.
+BI-DR-015 formally accepts WP-11.2. BI-DR-016 authorises the
+documentation-only acceptance checkpoint.
+[Historical reconstruction evidence](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#13-historical-reference-reconstruction-evidence).
+
+**WP-11.1 — ACCEPTED.**\
+**WP-11.2 — ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**\
+**WP-11.3 — PENDING AUTHORISATION.**
+
+Analytical dataset implementation is pending. Historical exports require
+separate owner authorisation. Research disclosure remains deferred.
+The Windows PBIP proof is authorised for fixtures and remains unexecuted.
+Phases 12–14 remain pending.
+[Formal WP-11.2 acceptance](../06_deployment/phase11_analytical_data_architecture_and_contracts.md#14-formal-wp-112-acceptance).
 
 | Approved decision | Architectural boundary | Acceptance condition |
 |---|---|---|

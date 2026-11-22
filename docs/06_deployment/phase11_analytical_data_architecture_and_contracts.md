@@ -2,7 +2,7 @@
 
 **Document ID** · NCI-DASH-002\
 **Version** · 0.1\
-**Status** · Proposed contracts for Project Owner review\
+**Status** · Accepted and completed with documented limitations\
 **Work package** · WP-11.2, Analytical Data Architecture & Contracts
 
 ## 1. Authority and scope
@@ -35,8 +35,8 @@ created or released. Scope is local synthetic review.
 
 | Source | Classification and inspection | Proposed dashboard use |
 |---|---|---|
-| Fieldwise Cloud seed-42 `customers.csv`, `subscriptions.csv`, `subscription_snapshots.csv`, `usage_monthly.csv`, `invoices.csv` | Existing reference and supported producer, requiring transformation. The retained Phase 05 manifest identifies all five historical inputs, row counts, sizes and SHA-256. The accepted generator, projection types and ingestion headers were inspected. `data/raw` contains no retained copy of the five CSVs. The reference helper creates a temporary export after its development gates pass. No generation was run for WP-11.2. | Reproduce the authorised development reference from 1 April 2021 through 31 March 2024 in a later increment. Use the typed companion evidence from the same verified run where the CSVs omit information. |
-| Typed Fieldwise episode, billing, snapshot and usage evidence | Existing source schemas requiring transformation. `ProvenancedDevelopment` retains the typed population and gate results. Invoice cadence and conservative availability come from matched scheduled charges and timestamps. Usage bounds and availability and the snapshot evidence timestamps exist in the typed records and are omitted from the CSV projections. | Supply identity, temporal and cadence checks for the historical facts. Keep the Registry, event evidence and internal record references out of dashboard imports. |
+| Fieldwise Cloud seed-42 `customers.csv`, `subscriptions.csv`, `subscription_snapshots.csv`, `usage_monthly.csv`, `invoices.csv` | No complete original package was found in the authorised development locations. The single BI-DR-012 reconstruction reproduced all five accepted files byte for byte. | Verified historical source for 1 April 2021 through 31 March 2024. Any dashboard transformation remains subject to separate authorisation. |
+| Typed Fieldwise episode, billing, snapshot and usage evidence | Retained from the same verified reconstruction. Invoice cadence and conservative availability come from matched scheduled charges and timestamps. Usage bounds and availability and the snapshot evidence timestamps are omitted from the CSV projections. | Supply identity, temporal and cadence checks for the historical facts. Keep the Registry, event evidence and internal record references out of dashboard imports. |
 | Phase 05 feature bundle | Existing and verified. `data/processed/phase05-fieldwise-final/` version 2, `fieldwise-episode-features-v1`. The manifest, observations, predictors and prediction-eligibility files matched the audit fingerprints. | Corroborate coverage and point-in-time design. Predictor rows, episode observation rows and outcomes are excluded from dashboard input. |
 | Descriptive dashboard bundle | Proposed and unimplemented. No dashboard-ready bundle was verified. | Executive Overview and Customer Analytics. This is the first implementation priority after contract approval. |
 | Misata, UCI and any additional external data | Deferred under BI-PO-003. Distinct native grains, identities and currency semantics remain in the source governance record. No new inspection of their data files was needed for this contract. | Outside the baseline report. |
@@ -447,6 +447,17 @@ vectors and protected inputs are outside every export allowlist.
 
 ## 6. Financial reconciliation and future DAX reference
 
+BI-DR-011 approves these historical reporting definitions. Distinguish the
+full extraction population, account creation cohorts, established episode
+inception cohorts and fact-qualified populations. Reactivation retains the
+account and creates a separate canonical episode. Blank termination dates
+do not establish historical activity. Use explicit UTC date roles, inclusive
+reporting dates within certified coverage and half-open paid-service
+intervals. The invoice view uses issue date and evidence known by the fixed
+extraction cut-off. Show snapshot amounts at one certified date and identify
+the expected active population and usable active observations separately.
+Usage coverage uses certified full episode-month opportunities.
+
 | Measure | Independent Python reference definition |
 |---|---|
 | Gross issued GBP | On validated source invoices, select distinct eligible invoice IDs in the inclusive issue-date range, verified GBP and available evidence at the bundle cut-off. Sum exact `Decimal` face amounts. Join an owner only through the unique episode mapping. One full annual invoice stays on its original issue date. Treat negative invoices, unsupported corrections or currency and missing amounts as errors. Payment status or date does not alter the issued amount. |
@@ -585,7 +596,7 @@ until its required checks and approvals pass.
 | BI-CT-02 — Explicit analytical grain | Passed | All ten proposed datasets define a single grain, primary key and date or experiment role. Control records declare table and field identities. |
 | BI-CT-03 — Field definitions and types | Passed | The schema tables give ordered names, meaning, types, nullability and units. Financial amounts and scientific statistics have distinct precision and validity rules. |
 | BI-CT-04 — Approved financial semantics preserved | Passed | Gross issuance is in GBP at invoice issue grain, monthly contractual amounts are separate and the six-calendar-month CLV target is unchanged. §6 defines source-level reconciliation and accepted reference totals. |
-| BI-CT-05 — Proposed reporting aggregation rules | Pending Owner Approval | BI-DR-001 approves the architecture with conditions. The detailed population, date filters, financial reconciliation, snapshot scope and usage denominator still require resolution before implementation. |
+| BI-CT-05 — Reporting aggregation rules | Passed | BI-DR-011 approves the specification definitions in §6, including the populations, UTC date roles, fixed-extraction invoice view, snapshot coverage and usage denominator. Dashboard implementation and DAX verification remain separate gates. |
 | BI-CT-06 — Relationship design prevents duplication | Passed | §3 defines dimension-to-fact cardinality, keeps research separate and excludes fact-to-fact joins. Later model tests must prove counts and amounts under fan-out, duplicate key and reactivation fixtures. |
 | BI-CT-07 — Testable data-quality constraints | Passed | Schema, uniqueness, foreign keys, validity, coverage, completeness and reconciliation checks have expected outcomes, including rejection of invalid input. Each dataset names its targeted tests. |
 | BI-CT-08 — Reproducible versioning specified | Passed | §7 defines immutable versioned bundles, ordered outputs, manifest and digest binding, and the scope of byte-stable replay. |
@@ -596,7 +607,7 @@ until its required checks and approvals pass.
 | BI-CT-13 — Research fields and cohort release | Pending Owner Approval | BI-DR-003 and BI-DR-004 defer disclosure. The field and cohort controls must receive a separate approval before any research projection. |
 | BI-CT-14 — Protected reserve boundary | Passed | Verification used the accepted development artefacts, retained manifests and accepted project records. No protected reserve path was opened or used as an input. |
 | BI-CT-15 — Change and implementation boundaries | Passed | Verified the Phase 10 baseline and clean index. This work changed documentation only. WP-11.3, exports, report artefacts and semantic models were not started. |
-| BI-CT-16 — Contract and implementation authorisation | Pending Owner Approval | BI-DR-001 and BI-DR-002 are conditional. BI-DR-005 approves local policy. Resolve remaining conditions and separately authorise implementation. BI-DR-006 and BI-DR-008 remain deferred. |
+| BI-CT-16 — Implementation authorisation | Pending Owner Approval | BI-DR-015 formally accepts the specification. Historical analytical export implementation requires separate Project Owner authorisation under BI-DR-006. WP-11.3 remains pending authorisation under BI-DR-008. |
 
 For invalid source, schema, permission, provenance or reconciliation,
 fail the affected bundle validation before promotion. Report the dataset,
@@ -613,7 +624,7 @@ package needs its own authorisation and required preceding evidence.
 
 | Work package | Proposed work | Gate before dependent work |
 |---|---|---|
-| WP-11.2 closure | Resolve the conditions of BI-DR-001 and BI-DR-002. Research disclosure remains deferred. | Formal WP-11.2 acceptance requires a separate Project Owner decision. |
+| WP-11.2 closure | The verified historical evidence and approved definitions support specification acceptance. Research disclosure remains deferred. | Accepted and completed with documented limitations under BI-DR-015. |
 | WP-11.3 — Semantic model design | Pending separate authorisation under BI-DR-008. The future Windows proof approved under BI-DR-007 has its own fixture-only scope. | Accept the contract conditions and record the Windows proof or local PBIX fallback before relying on the authoring format. |
 | WP-11.4 — Data preparation and Power Query | Implement the descriptive Fieldwise bundle first after approval. Exercise validation, transfer, inventory checks and fail-closed local refresh. Prepare research projections only for separately approved fields and cohorts. | Verified, reconciled data and refresh. Validate historical and research relationships in the imported model. |
 | WP-11.5 — DAX measures | Agree filter-context rules and compare reviewed DAX results with independent Python reference calculations. | Exact reconciliation of counts and pennies, and approved handling of ratios, nulls and coverage. |
@@ -624,23 +635,23 @@ package needs its own authorisation and required preceding evidence.
 
 | Risk or dependency | Effect and control |
 |---|---|
-| Missing retained historical CSV bytes or changed Registry scope | A replay may use different canonical IDs. Approve the reference environment or a new replay identity and reconcile logical facts before publishing any local bundle. |
+| Historical source preservation and Registry scope | The controlled reconstruction verified the reference files and identities. Preserve the verified bundle, pin its digests before any authorised use and retain the original Registry unchanged. An additional replay or different namespace requires separate authorisation. |
 | Mixed research evidence or outstanding field approval | A research page may remain unavailable. Verify only authorised evidence and suppress unapproved fields and cohorts. |
 | Incorrect relationships or date context | Invoice amounts and distinct counts can inflate. Validate the semantic model, then independently reconcile full and filtered controls. |
 | Windows toolchain, local permissions or cache handling | Failure blocks refresh or risks unintended retention. Prove the selected Desktop build and format and approve local storage, access, retention and review copies. |
 
-Resolve source availability, detailed historical definitions and Registry
-reconciliation under BI-DR-001 and BI-DR-002. Separately approve any future
-replay, historical export implementation or WP-11.3 initiation. Research
-pages remain unavailable pending field and cohort disclosure approval.
+The Project Owner accepted the verified reference and specification under
+BI-DR-014 and BI-DR-015. Separately approve any future replay, historical
+export implementation or WP-11.3 initiation. Research pages remain
+unavailable pending disclosure approval.
 The exact Windows build and approved fixtures remain to be verified in
 the future proof. No execution gate has been advanced.
 
 ## 12. Project Owner decision register
 
-The Project Owner approved the following dispositions. The conditions and
-deferrals govern the proposed contracts. WP-11.2 remains pending formal
-acceptance. WP-11.3 remains pending.
+The Project Owner approved the following dispositions. BI-DR-015 records
+formal WP-11.2 specification acceptance. The conditions and deferrals
+govern implementation and disclosure. WP-11.3 remains pending authorisation.
 
 | Decision | Status | Approved disposition and conditions |
 |---|---|---|
@@ -654,6 +665,90 @@ acceptance. WP-11.3 remains pending.
 | BI-DR-008 — WP-11.3 | Deferred | WP-11.3 remains pending. Semantic-model implementation and report authoring remain unauthorised. |
 | BI-DR-009 — Canonical NEDS v1.1 | Approved | Designate `docs/standards/NA_Engineering_Development_Standard_NEDS_v1.1.md` as the canonical repository copy, SHA-256 `e2b165a04a1213c2367968cc8938fafadfab27fa19bdd4570b84a918606a025c`. Preserve the approved text byte for byte. Exclude the project-management duplicate and Windows metadata sidecar from the checkpoint. Leave them untracked and unstaged. |
 | BI-DR-010 — AGENTS.md Adoption | Approved with Corrections | Prepare `AGENTS.md` for formal adoption. Preserve its purpose and project guidance. Clarify reserve access and work-package authorisation, cite the canonical NEDS, roadmap and Phase 11 specifications, and distinguish the failed raw interventional CLV TreeSHAP reconciliation from other configurations. |
+| BI-DR-011 — Historical KPI Definitions | Approved | Approve full account, creation and fact-qualified cohorts, and episode establishment, inception, ownership and qualified populations. Use explicit UTC calendar roles and boundaries, gross GBP issued by the selected date as known at fixed extraction, certified single-date snapshot populations and monetary coverage, and full episode-month opportunity denominators with distinct observed, partial, awaiting-reporting and missing or unavailable states. |
+| BI-DR-012 — Controlled Historical Reconstruction | Approved with Conditions | Authorise one run only if a complete original source package cannot be recovered from an authorised location. Use the accepted generator, seed, configuration, scenario, cutoff and canonical scope with an isolated verified copy of the retained Phase 05 Registry. Preserve the original byte for byte. Exclude reserves, training, inference, scoring and research replay. Stop on mandatory failure and require all equivalence evidence before claiming an exact reproduction. |
+| BI-DR-013 — WP-11.2 Acceptance Boundary | Approved | Keep WP-11.2 open until source provenance, historical identity, financial controls and historical contract conditions are resolved and the Project Owner formally accepts the work package. WP-11.3 remains pending. |
+| BI-DR-014 — Historical Reference Acceptance | Approved | Formally accept the reconstructed Fieldwise Cloud historical development reference as an exact verified reproduction. The checksums, identity reconciliation and financial controls in §13 govern the accepted package. |
+| BI-DR-015 — WP-11.2 Formal Acceptance | Approved | Accept and complete WP-11.2 with documented limitations. Acceptance covers the analytical architecture, six historical contracts, source provenance, identity definitions, historical reporting semantics and specified controls. Implementation and disclosure remain separately gated. |
+| BI-DR-016 — Controlled Documentation Checkpoint | Approved | Authorise one documentation-only commit and a standard fast-forward push recording BI-DR-011–016, the historical integrity evidence, formal WP-11.2 acceptance, remaining restrictions and the Phase 11 roadmap status. Exclude source data and implementation work. |
 
 [Canonical NEDS v1.1](../standards/NA_Engineering_Development_Standard_NEDS_v1.1.md),
 [Repository agent instructions](../../AGENTS.md).
+
+## 13. Historical reference reconstruction evidence
+
+**Classification — Exact Historical Reference Reproduction, accepted under
+BI-DR-014.** Authorised
+development locations had no complete original package. One execution of
+`fieldwise_reference()` used seed 42, the baseline TEMPORAL scenario,
+Contract v1.1, business model v0.2 and PD-006. Its reference cutoff was
+31 March 2024 at 23:59:59.999999 UTC. The run matched the retained
+Phase 05 generation parameters, dependency versions and RNG stream
+algorithm. BASIC and TEMPORAL succeeded and all 13 required development
+acceptance gates passed.
+
+All five CSV row counts and SHA-256 values matched §2. The canonical
+typed evidence digest was
+`a9ed8d2a7c64839cce867652c326a86839d83ee193fe31fedf57908c97b7e09a`,
+matching Phase 05. The retained typed groups cover lifecycle and ownership,
+snapshots, usage and scheduled charges from the same run. Independent
+checks verified the source headers, unique keys, foreign keys and temporal
+bounds.
+
+The original Registry and isolated copy retained the BI-DR-002 digest.
+All 1,200 mappings and their audit records were unchanged. All 200
+reactivations preserved separate episode identities and account ownership.
+The 18,661 reconstructed snapshot keys matched the retained Phase 05
+candidate inventory across 1,194 episodes. The six additional Registry
+episodes terminated on or before their first eligible month-end and had
+no snapshot candidate. No new mappings were allocated.
+
+The accepted controls below include exact decimal financial reconciliation.
+The derived dashboard usage denominator remains implementation evidence.
+
+| Control | Accepted result |
+|---|---:|
+| Customers | 1,000 |
+| Subscription episodes | 1,200 |
+| Reactivations | 200 |
+| Unique invoices | 14,787 |
+| Gross issued GBP | £1,566,111.80 |
+| Monthly invoices | 14,273 |
+| Monthly gross issuance | £1,127,567.00 |
+| Annual invoices | 514 |
+| Annual gross issuance | £438,544.80 |
+| Subscription snapshots | 18,661 |
+| Monthly usage source records | 16,547 |
+| Active episodes at extraction snapshot | 1,000 |
+| Monthly contractual GBP at extraction snapshot | £77,056.60 |
+
+The private, Git-ignored local package is
+`data/interim/wp11-2-historical-reference.DkZGlP/`. It contains the five
+source CSVs, canonical typed JSON lines, provenance, Registry reconciliation
+and verification records, and the isolated copy. The verification record
+SHA-256 is `b42d52e5ebca93d72912f73fca2054f66aec42ef34f0cc091b5b6c9d14371258`.
+The accepted original Registry fingerprint is
+`28525cb869dcfdb62a64e255f5dad715e1f0cdbed5887269e6f61d72ae0eea90`.
+The acceptance checkpoint verified the retained evidence without executing
+another reconstruction. Keep the package and its evidence outside Git.
+
+## 14. Formal WP-11.2 acceptance
+
+**WP-11.2 — ACCEPTED AND COMPLETED WITH DOCUMENTED LIMITATIONS.**
+
+BI-DR-015 formally accepts the specification for `account`, `episode`,
+`calendar`, `invoice_issue`, `episode_snapshot` and `episode_usage_month`.
+Their approved grains, keys, relationship rules, financial semantics,
+reporting populations, temporal definitions and coverage requirements
+remain authoritative. The verified source and identity evidence is in §13.
+The BI-DR-011 KPI definitions remain in force.
+
+The sixteen-criterion matrix records **12 Passed**, **2 Not Tested**
+and **2 Pending Owner Approval**. BI-CT-09 dashboard export generation,
+integrity, replay and reconciliation remain untested. BI-CT-11 Windows
+authoring, PBIP/PBIX verification, refresh and DAX remain untested.
+BI-CT-13 retains all 34 research disclosure fields and associated cohorts
+pending approval. BI-CT-16 retains separate historical export
+implementation authorisation. Specification acceptance completes WP-11.2.
+It grants no implementation or research disclosure authority. WP-11.3
+remains pending authorisation.
